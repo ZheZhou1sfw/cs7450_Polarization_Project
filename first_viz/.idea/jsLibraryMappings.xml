@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JavaScriptLibraryMappings">
+    <file url="file://$PROJECT_DIR$" libraries="{d3-brush.v1, d3-color.v1, d3-dispatch.v1, d3-drag.v1, d3-ease.v1, d3-interpolate.v1, d3-selection.v1, d3-timer.v1, d3-transition.v1}" />
+  </component>
+</project>
