@@ -293,6 +293,7 @@ d3.csv('real_initial_data.csv', dataPreprocessor).then(function(dataset) {
         .range([zoomedInHeight, 0]);
 
 
+
     // add a overall tooltips for selection
 
     verticalLineG = mainG.append('g');
@@ -307,13 +308,20 @@ d3.csv('real_initial_data.csv', dataPreprocessor).then(function(dataset) {
 
     // get the svg absolute position
     var svgPosRect = document.getElementsByClassName("mainSVG").item(0).getBoundingClientRect();
-    console.log(svgPosRect);
+
 
     d3.select('body').on('mousemove', function() {
         var xPos = d3.mouse(this)[0] - svgPosRect.x - paddings.left + 2;
 
+
+
         verticalLineG.select('line')
             .attr("transform", function() {
+                if (xPos < 0) {
+                    d3.select(this).attr('stroke-width', 0);
+                } else {
+                    d3.select(this).attr('stroke-width', 4);
+                }
                 var deltaX = xPos;
                 return "translate(" + deltaX + ",0)";
             });
@@ -322,7 +330,7 @@ d3.csv('real_initial_data.csv', dataPreprocessor).then(function(dataset) {
 
         var closestIdx = 0;
         var minVal = 10000;
-        console.log(combinedPoints);
+
         for (var i = 0; i < combinedPoints.length; i++) {
             var delta = Math.abs(combinedPoints[i][0] - curXPosToMainG);
             if (delta < minVal) {
@@ -354,10 +362,46 @@ d3.csv('real_initial_data.csv', dataPreprocessor).then(function(dataset) {
     });
 
 
+    // add all individual members circles
+    var memberCircleG = mainG.append('g');
+
+    memberCircleG.selectAll('circle')
+        .data(original_data)
+        .enter()
+        .append('circle')
+        .attr('cx', function(d) {
+            var curYear = (d.congress - 57) * 2  + 1900;
+            return xScale(curYear)
+        })
+        .attr('cy', function(d) {
+            return yScale(d.dim1)
+        })
+        .attr('r', function(d) {
+            if (d.dim1 > 0.7 || d.dim1 < -0.6) return 0;
+            else if (d.chamber === 'President') return 5; // president
+            else return 2; // democrats
+        })
+        .style('opacity', function(d) {
+            if (d.chamber === 'President') return 1;
+            else return 0.06;
+        })
+        .style('fill', function(d) {
+            if (d.chamber === 'President') return 'gold'; // president
+            else if (d.party === '200') return 'red'; // republican
+            else return 'blue'; // democrats
+        })
+        .on('click', function(d) {
+            var curCong = d.congress;
+            console.log(curCong)
+            console.log(d3.select(this));
+
+        });
 
 
 
     // Set up the brush
+
+
     var brush = d3.brushX()
         .extent([[0, 0], [globalWidth - paddings.right, globalHeight - 150]])
         .on("brush", function (d) {
@@ -373,10 +417,8 @@ d3.csv('real_initial_data.csv', dataPreprocessor).then(function(dataset) {
                 var tempCombined = [];
                 var congIdx = Math.floor(s / 2);
                 tempCombined.push(zoomedScaleX(s));
-                // console.log(congIdx);
                 tempCombined.push(zoomedScaleY(combinedData[congIdx]['median_dim1']));
                 zoomedInPoints.push(tempCombined);
-                // console.log(zoomedInPoints);
             }
             var zoomedInPathData = lineGenerator(zoomedInPoints);
 
@@ -391,6 +433,7 @@ d3.csv('real_initial_data.csv', dataPreprocessor).then(function(dataset) {
                 .attr("stroke-width", 1);
         });
 
+    console.log(brush);
 
     // append the brush effect
     mainG.append('g')
