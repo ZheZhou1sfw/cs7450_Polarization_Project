@@ -26,8 +26,8 @@ var zoomedInG = svg.append('g')
     .attr('visibility', 'visible');
 
 // Create a pre-rendered rectangle frame for zoomed in viz
-var zoomedInWidth = globalWidth / 4;
-var zoomedInHeight = globalHeight / 4;
+var zoomedInWidth = globalWidth / 3;
+var zoomedInHeight = globalHeight / 3;
 
 var zoomedInFrame = zoomedInG.append('rect')
     .attr('x', 0)
@@ -39,8 +39,163 @@ var zoomedInFrame = zoomedInG.append('rect')
 // load the data and do the job
 d3.csv('real_initial_data.csv', dataPreprocessor).then(function(dataset) {
     var original_data = dataset;
-
     console.log(original_data);
+
+    var autocompleteData = compressData(original_data);
+    console.log(autocompleteData);
+
+    /*
+    // initialize the search engine with fuse.js
+    var fuseOptions = {
+        shouldSort: true,
+        threshold: 0.2,
+        location: 0,
+        distance: 100,
+        maxPatternLength: 32,
+        minMatchCharLength: 4,
+        keys: [
+            "name"
+        ]
+    };
+    fuse = new Fuse(original_data, fuseOptions); // "list" is the item array
+    //console.log(fuse.search("Hillary"));
+    */
+
+
+
+    function showPersonDetail(icpsr) {
+
+        // show image
+
+
+        var images = zoomedInG.selectAll("image")
+            .data([0]) // number of images, [0] for 1, [0, 0] for 2
+            .enter();
+
+        images.exit().remove();
+
+        images.append('svg:image')
+            .attr("xlink:href", function() {
+                var patchedIcpsr = ("00000" + icpsr).slice(-6);
+                //console.log("https://voteview.com/static/img/bios/" + patchedIcpsr + ".jpg");
+                return "https://voteview.com/static/img/bios/" + patchedIcpsr + ".jpg";
+            })
+            .attr('width', "150")
+            .attr('height', "150");
+
+        console.log(icpsrToPersonMap[icpsr]);
+
+        var text = zoomedInG.selectAll("text")
+            .data([icpsrToPersonMap[icpsr]])
+            .enter();
+
+        text.exit().remove();
+
+        text.append('text')
+            .attr('x', 5)
+            .attr('y', 180)
+            .text(function(d) {
+                console.log(d);
+                var intCongArr = [];
+                for (var i = 0; i < d.congress.length; i++) intCongArr.push(parseInt(d.congress[i]));
+                var minCong = d3.extent(intCongArr)[0].toString();
+                var maxCong = d3.extent(intCongArr)[1].toString();
+                if (maxCong == '116' || d.name === "TRUMP, Donald John") maxCong = " to now";
+                else maxCong = " ~ " + maxCong;
+                var str = "Name: " + d.name + "\n" + "Congress: " + minCong + maxCong;
+                console.log(str);
+                return str;
+            })
+            .attr("font-size", "20px")
+            .attr("fill", 'steelblue');
+
+        console.log(text);
+    }
+
+    // function that clears out the detailed view
+    function clearDetailView() {
+        zoomedInG.selectAll("image").remove();
+        zoomedInG.selectAll("text").remove();
+    }
+
+
+    // Register the autocomplete feature
+    new autoComplete({
+        data: {                              // Data src [Array, Function, Async] | (REQUIRED)
+            src: async () => {
+                // API key token
+                //const token = "this_is_the_API_token_number";
+                // User search query
+                const query = document.querySelector("#autoComplete").value;
+                // Fetch External Data Source
+                //const source = autocompleteData;
+
+                // Format data into JSON
+                //const data = await source.json();
+                // Return Fetched data
+                return autocompleteData;
+            },
+            key: ["name"],
+            cache: false
+        },
+        /*
+        query: {                               // Query Interceptor               | (Optional)
+            manipulate: (query) => {
+                return query.replace("pizza", "burger");
+            }
+        },
+
+         */
+        sort: (a, b) => {                    // Sort rendered results ascendingly | (Optional)
+            if (a.match < b.match) return -1;
+            if (a.match > b.match) return 1;
+            return 0;
+        },
+        placeHolder: "Enter a name",     // Place Holder text                 | (Optional)
+        selector: "#autoComplete",           // Input field selector              | (Optional)
+        threshold: 3,                        // Min. Chars length to start Engine | (Optional)
+        debounce: 300,                       // Post duration for engine to start | (Optional)
+        searchEngine: "strict",              // Search Engine type/mode           | (Optional)
+        resultsList: {                       // Rendered results list object      | (Optional)
+            render: true,
+            container: source => {
+                console.log(source)
+                source.setAttribute("id", "autoComplete_list");
+            },
+            destination: document.querySelector("#autoComplete"),
+            position: "afterend",
+            element: "ul"
+        },
+        maxResults: 5,                         // Max. number of rendered results | (Optional)
+        highlight: true,                       // Highlight matching results      | (Optional)
+        resultItem: {                          // Rendered result item            | (Optional)
+            content: (data, source) => {
+                source.innerHTML = data.match;
+            },
+            element: "li"
+        },
+        noResults: () => {                     // Action script on noResults      | (Optional)
+            const result = document.createElement("li");
+            result.setAttribute("class", "no_result");
+            result.setAttribute("tabindex", "1");
+            result.innerHTML = "No Results";
+            document.querySelector("#autoComplete_list").appendChild(result);
+        },
+        onSelection: feedback => {             // Action script onSelection event | (Optional)
+            var person = feedback.selection.value;
+            console.log(person);
+            // show detail about that person
+            document.querySelector("#autoComplete").value = "";
+            clearDetailView();
+            showPersonDetail(person.icpsr);
+
+        }
+    });
+
+
+
+
+
     // data processing: Find congress - party - median(dim1)
 
     // step1: Predefine two maps for republicans and democrats
@@ -144,10 +299,10 @@ d3.csv('real_initial_data.csv', dataPreprocessor).then(function(dataset) {
     // ------ Get three paths' data: -------
 
     var democPathData = lineGenerator(democPoints);
-        // :>
+    // :>
 
     var repubPathData = lineGenerator(repubPoints);
-        // :p
+    // :p
 
     var combinedPathData = lineGenerator(combinedPoints);
 
@@ -255,42 +410,35 @@ d3.csv('real_initial_data.csv', dataPreprocessor).then(function(dataset) {
     // the hover function that shows/hides tooltips for three lines
     var allCircles = tooltipGroup.selectAll('circle');
 
-            /*
-            allCircles.on('mouseover', function(d) {
-                var curIdx = d['congress'] - 57;
-                var tempX = combinedPoints[curIdx][0];
-                var circlesInLine = [];
-                allCircles.each(function(d, i) {
-                    if (d3.select(this).attr('cx') == tempX) {
-                        circlesInLine.push(this);
-                    }
-                });
-                //console.log(circlesInLine);
-                for (var i = 0; i < circlesInLine.length; i++) {
-                    var curCircle = circlesInLine[i];
+    /*
+    allCircles.on('mouseover', function(d) {
+        var curIdx = d['congress'] - 57;
+        var tempX = combinedPoints[curIdx][0];
+        var circlesInLine = [];
+        allCircles.each(function(d, i) {
+            if (d3.select(this).attr('cx') == tempX) {
+                circlesInLine.push(this);
+            }
+        });
+        //console.log(circlesInLine);
+        for (var i = 0; i < circlesInLine.length; i++) {
+            var curCircle = circlesInLine[i];
 
-                    if (d3.select(curCircle).attr('class') === 'democDots') {
-                        tooltip1.show(democData[curIdx], curCircle);
-                    } else if (d3.select(curCircle).attr('class') === 'repubDots') {
-                        tooltip2.show(repubData[curIdx], curCircle);
-                    } else {
-                        tooltip3.show(combinedData[curIdx], curCircle);
-                    }
-                }
-            })
-                .on('mouseout', function(d) {
-                    tooltip1.hide();
-                    tooltip2.hide();
-                    tooltip3.hide();
-                });
-            */
-
-    // set up the zoomed-in scale
-    var zoomedScaleX = d3.scaleLinear()
-        .range([0, zoomedInWidth]);
-
-    var zoomedScaleY = d3.scaleLinear()
-        .range([zoomedInHeight, 0]);
+            if (d3.select(curCircle).attr('class') === 'democDots') {
+                tooltip1.show(democData[curIdx], curCircle);
+            } else if (d3.select(curCircle).attr('class') === 'repubDots') {
+                tooltip2.show(repubData[curIdx], curCircle);
+            } else {
+                tooltip3.show(combinedData[curIdx], curCircle);
+            }
+        }
+    })
+        .on('mouseout', function(d) {
+            tooltip1.hide();
+            tooltip2.hide();
+            tooltip3.hide();
+        });
+    */
 
 
 
@@ -394,12 +542,30 @@ d3.csv('real_initial_data.csv', dataPreprocessor).then(function(dataset) {
             var curCong = d.congress;
             console.log(curCong)
             console.log(d3.select(this));
+            clearDetailView();
+            showPersonDetail(d.icpsr);
+        })
+        .on('mouseover', function(d) {
+            tooltip4.show(d);
 
+        })
+        .on('mouseout', function(d) {
+
+            tooltip4.hide();
         });
 
 
+    /*   <<<<<< Brushing is currently disabled, and the zoomed-in view is temporarily used for detail for each person >>>>>
+
+    // set up the zoomed-in scale
+    var zoomedScaleX = d3.scaleLinear()
+        .range([0, zoomedInWidth]);
+
+    var zoomedScaleY = d3.scaleLinear()
+        .range([zoomedInHeight, 0]);
 
     // Set up the brush
+
 
 
     var brush = d3.brushX()
@@ -447,6 +613,29 @@ d3.csv('real_initial_data.csv', dataPreprocessor).then(function(dataset) {
         // removes crosshair cursor
     d3.selectAll('.brush>.overlay').remove();
 
+    // add a event listener to out search box
+    //console.log(d3.select('#submitButton'));
+
+    */
+
+
+    // search using fuse.js
+    /*
+    d3.select('#submitButton')
+        .on('click', function() {
+            var textVal = document.getElementById("searchValue").value;
+            //console.log(textVal);
+            //console.log(fuse.search(textVal));
+            var tempSearchResult = fuse.search(textVal);
+            // step 1 get processed result
+            var searchByIcpsr = compressSearch(tempSearchResult);
+            console.log(searchByIcpsr);
+            // step 2 if result length == 0: wrong name
+            // else if length == 1, output the detail result
+            // else (length > 1) prompt the user with possible results
+
+        });
+    */
 });
 
 
@@ -486,10 +675,20 @@ var tooltip3 = d3.tip()
         return "<strong>Congress:</strong>" + d.congress + "  <strong>median:</strong>" + d.median_dim1;
     });
 
+// Set a tooltip for each member
+var tooltip4 = d3.tip()
+    .attr('class', 'd3-tip tip4')
+    .offset([-8, 0])
+    .html(function(d) {
+        var partyName = d.party === 200 ? "Republicans" : "Democrats";
+        return "<strong>" + d.name + " </strong>" + " (" + partyName + ")";
+    });
+
 // register tooltips
 svg.call(tooltip1);
 svg.call(tooltip2);
 svg.call(tooltip3);
+svg.call(tooltip4);
 
 // create the data preprocessor
 function dataPreprocessor(row) {
@@ -550,4 +749,63 @@ function getNodePos(el)
          lx += (el.offsetLeft || el.clientLeft), ly += (el.offsetTop || el.clientTop), el = (el.offsetParent || el.parentNode))
         ;
     return {x: lx, y: ly};
+}
+
+// the data preprocessing function used with fuse.js
+/*
+function compressSearch(tempSearchRes) {
+    var res = {};
+    for (var i = 0; i < tempSearchRes.length; i++) {
+        var curRow = tempSearchRes[i];
+        var curIcpsr = curRow.icpsr;
+        var curObj;
+        if (!(curIcpsr in res)) {
+            curObj = {};
+            curObj['name'] = curRow.name;
+            curObj['congress'] = [curRow.congress];
+            res[curIcpsr] = curObj;
+        } else {
+            curObj = res[curIcpsr];
+            curObj['congress'].push([curRow.congress]);
+        }
+    }
+    return res;
+}
+ */
+
+// The data preprocessing function used with autocomplete.js
+//     which returns an array of people objects
+function compressData(originalData) {
+    var res = {};
+    for (var i = 0; i < originalData.length; i++) {
+        var curRow = originalData[i];
+        var curIcpsr = curRow.icpsr;
+        var curObj;
+        if (!(curIcpsr in res)) {
+            curObj = {};
+            curObj['name'] = curRow.name;
+            curObj['congress'] = [curRow.congress];
+            res[curIcpsr] = curObj;
+        } else {
+            curObj = res[curIcpsr];
+            curObj['congress'].push(curRow.congress);
+        }
+    }
+    var realRes = [];
+
+    for (let key in res){
+        if(res.hasOwnProperty(key)) {
+            var temp = {};
+            temp['icpsr'] = key;
+            for (let subKey in res[key]) {
+                if (res[key].hasOwnProperty(subKey)) {
+                    temp[subKey] = res[key][subKey];
+                }
+            }
+            realRes.push(temp);
+        }
+    }
+    // important -> global map for fast person lookup based on icpsr
+    icpsrToPersonMap = res;
+    return realRes;
 }
