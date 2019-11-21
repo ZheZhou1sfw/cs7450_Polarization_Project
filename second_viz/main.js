@@ -418,9 +418,24 @@ function drawPoints(thatCongressData) {
     circles.exit().remove(); // exit and remove unneeded circles
 
 
-    circles.enter() // enter
+    circles = circles.enter() // enter
         .append('circle')
-        .attr('r', 0);
+        .attr('r', 0)
+        .merge(circles);
+
+    circles.on('click', function(d) {
+        clearDetailView();
+        showPersonDetail(d.icpsr);
+    })
+        .on('mouseover', function(d) {
+            tooltip1.show(d);
+
+        })
+        .on('mouseout', function(d) {
+            tooltip1.hide();
+        });
+
+
 
     // update
     circles.transition()
@@ -441,6 +456,9 @@ function drawPoints(thatCongressData) {
             else if (d.party === '200') return 'blue';
             else return 'red';
         });
+
+
+
 
     console.log(circles);
 }
@@ -682,11 +700,19 @@ var path = d3.geoPath();
         stateG.selectAll("path")
             .data(geojson)
             .enter()
+
             .append('path')
             .attr('d', path)
+            .attr('class', 'statesPath')
             .style('fill', 'steelblue')
-            .on('mouseover', tooltip2.show)
-            .on('mouseout', tooltip2.hide)
+            .on('mouseover', function(d) {
+                tooltip2.show(d);
+                d3.select(this).style('fill', 'red');
+            })
+            .on('mouseout', function(d) {
+                tooltip2.hide(d);
+                d3.select(this).style('fill', 'steelblue');
+            })
             .on('click', function(d) {
                 //console.log(d);
                 var stateFullName = d.properties.name;
@@ -698,9 +724,10 @@ var path = d3.geoPath();
                 showState = updateTitle(stateAbbr);
                 var congInt = globalCong;
                 if (showState) {
-                    drawPoints(dataByStateByCong[stateAbbr][congInt])
+                    drawPoints(dataByStateByCong[stateAbbr][congInt]);
+                    drawPoints(dataByStateByCong[stateAbbr][congInt]);
                 } else {
-                    drawPoints(dataByCong[congInt]);
+                    //drawPoints(dataByCong[congInt]);
                     drawPoints(dataByCong[congInt]);
                     drawTrace(traceData[congInt]);
                     drawBars(traceData[congInt]);
