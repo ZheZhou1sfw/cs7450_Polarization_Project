@@ -1,0 +1,51 @@
+body {
+    font-family: "Open Sans";
+    margin: 0;
+}
+
+label {
+    font-size: 13px;
+}
+
+/* Paths for major viz and zoomedIn view */
+.path.main{
+    stroke-width: 5;
+}
+
+.path.zoomed{
+    stroke-width: 5;
+}
+
+/* Overall tooltips */
+.d3-tip{
+    font-size: 20px;
+}
+
+.states :hover {
+    fill: red;
+}
+
+.tip1{
+
+}
+
+.tip2{
+
+}
+
+.tip3{
+
+}
+
+/* main axis */
+.axis{
+
+}
+
+.axis.x {
+
+}
+
+.axis.y {
+
+}

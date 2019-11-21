@@ -109,13 +109,37 @@ d3.csv('real_initial_data.csv', dataPreprocessor).then(function(dataset) {
             .attr("font-size", "20px")
             .attr("fill", 'steelblue');
 
-        console.log(text);
+        // show a dot in the main viz that emphesizes this person
+        personDots = personDotsG.selectAll('circle')
+            .data(icpsrToPersonMap[icpsr].congress)
+            .enter()
+            .append('circle')
+            .attr('cx', function(d) {
+                var curYear = (d - 57) * 2  + 1900;
+                return xScale(curYear)
+            })
+            .attr('cy', function(d) {
+                return yScale(icpsrToPersonMap[icpsr].dim1)
+            })
+            .attr('r', function(d) {
+                return 10;
+            })
+            .style('opacity', function(d) {
+                if (d.chamber === 'President') return 1;
+                else return 1;
+            })
+            .style('fill', function(d) {
+                if (d.chamber === 'President') return 'gold'; // president
+                else if (d.party === '200') return 'red'; // republican
+                else return 'blue'; // democrats
+            })
     }
 
     // function that clears out the detailed view
     function clearDetailView() {
         zoomedInG.selectAll("image").remove();
         zoomedInG.selectAll("text").remove();
+        personDotsG.selectAll("circle").remove();
     }
 
 
@@ -511,7 +535,8 @@ d3.csv('real_initial_data.csv', dataPreprocessor).then(function(dataset) {
 
 
     // add all individual members circles
-    var memberCircleG = mainG.append('g');
+    memberCircleG = mainG.append('g');
+    personDotsG = memberCircleG.append('g');
 
     memberCircleG.selectAll('circle')
         .data(original_data)
@@ -550,7 +575,6 @@ d3.csv('real_initial_data.csv', dataPreprocessor).then(function(dataset) {
 
         })
         .on('mouseout', function(d) {
-
             tooltip4.hide();
         });
 
@@ -785,6 +809,7 @@ function compressData(originalData) {
             curObj = {};
             curObj['name'] = curRow.name;
             curObj['congress'] = [curRow.congress];
+            curObj['dim1'] = curRow.dim1;
             res[curIcpsr] = curObj;
         } else {
             curObj = res[curIcpsr];
