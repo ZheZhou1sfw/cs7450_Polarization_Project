@@ -676,27 +676,26 @@ var yearSpanPixel = yearSpan * everyYearPixel;
 // Set up the place holder for the path that we will use in zoomed-in view.
 var zoomedInPath = zoomedInG.append('path')
 
-
 // Initialize tooltips
 var tooltip1 = d3.tip()
     .attr('class', 'd3-tip tip1')
     .offset([-12, 0])
     .html(function(d) {
-        return "<strong>Congress:</strong>" + d.congress + "  <strong>median:</strong>" + d.median_dim1;
+        return "<div id=tip_container1><div id=rep_text>The Democratic Party</div><div id=custom_tip><div id=tip_dem_score>" + d.median_dim1 + "</div></div></div";
     });
 
 var tooltip2 = d3.tip()
     .attr('class', 'd3-tip tip2')
     .offset([-12, 0])
     .html(function(d) {
-        return "<strong>Congress:</strong>" + d.congress + "  <strong>median:</strong>" + d.median_dim1;
+        return "<div id=tip_container1><div id=rep_text>The Republican Party</div><div id=custom_tip><div id=tip_rep_score>" + d.median_dim1 + "</div></div></div";
     });
 
 var tooltip3 = d3.tip()
     .attr('class', 'd3-tip tip3')
     .offset([-12, 0])
     .html(function(d) {
-        return "<strong>Congress:</strong>" + d.congress + "  <strong>median:</strong>" + d.median_dim1;
+        return "<div id=custom_tip2><div id=tip_median_score>" + d.median_dim1 + "</div><div id=tip_text><strong>Median Ideology Score</strong><br>" + ((2*(d.congress-1)+1789)) + " - " +  ((2*(d.congress-1)+1789)+2) + " , " + d.congress + "th Congress</div></div>";
     });
 
 // Set a tooltip for each member
@@ -704,7 +703,7 @@ var tooltip4 = d3.tip()
     .attr('class', 'd3-tip tip4')
     .offset([-8, 0])
     .html(function(d) {
-        var partyName = d.party === 200 ? "Republicans" : "Democrats";
+        var partyName = d.party === 200 ? "Democrats" : "Republicans";
         return "<strong>" + d.name + " </strong>" + " (" + partyName + ")";
     });
 
