@@ -1,0 +1,111 @@
+body {
+    font-family: miller-text, serif;
+    margin: 0;
+    background-color: #141414;
+    color: white;
+}
+
+label {
+    font-family: miller-text, serif;
+    font-size: 13px;
+    color: white;
+}
+
+/* Paths for major viz and zoomedIn view */
+.path.main{
+    stroke-width: 5;
+}
+
+#custom_tip{
+    padding: 0.7em;
+    border-radius: 0.2em;
+    background-color: white;
+    margin-left: 15%;
+}
+
+#custom_tip2{
+    padding: 0.7em;
+    border-radius: 0.2em;
+    background-color: white;
+    display: flex;
+}
+
+#tip_container1{
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+}
+
+/*Viz 1 tooltip customizations*/
+#tip_text{
+    padding-left: 10px;
+    color: #141414;
+}
+
+#rep_text{
+    font-weight: bold;
+    text-align: center;
+}
+
+#tip_dem_score{
+    padding: 0.1em;
+    background-color: #D5DBF7;
+    font-size: 28px;
+    color: #4553E2;
+    font-weight: bold;
+    border-radius: 0.2em;
+}
+
+#tip_rep_score{
+    padding: 0.1em;
+    background-color: #F7D5D5;
+    font-size: 28px;
+    color: #D34444;
+    font-weight: bold;
+    border-radius: 0.2em;
+}
+
+#tip_median_score{
+    align-self: left;
+    padding: 0.1em;
+    background-color: #DEDEDE;
+    font-size: 28px;
+    color: #141414;
+    font-weight: bold;
+    border-radius: 0.2em;
+}
+.path.zoomed{
+    stroke-width: 5;
+}
+
+/* Overall tooltips */
+.d3-tip{
+    font-size: 18px;
+    font-family: miller-text, serif;
+    color: white;
+}
+
+.tip1{
+
+}
+
+.tip2{
+
+}
+
+.tip3{
+
+}
+
+/* main axis */
+.axis{
+
+}
+
+.axis.x {
+
+}
+
+.axis.y {
+
+}
