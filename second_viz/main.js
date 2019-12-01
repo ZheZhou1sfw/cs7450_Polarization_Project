@@ -78,6 +78,97 @@ var globalTitleG = mainG.append('g')
     .attr('class', 'title');
 
 
+// Add a group for legends
+var legendG = svg.append('g')
+    .attr('transform', function() {
+        var tempWidth = globalWidth * 6 / 7;
+        var tempHeight = globalHeight / 15;
+        return 'translate('+[tempWidth, tempHeight]+')'
+    });
+
+// draw legends
+var legendDelta = 12;
+
+legendG.append('circle')
+    .attr('cx', 0)
+    .attr('cy', 0)
+    .attr('r', 2)
+    .style('fill', 'red');
+
+legendG.append('text')
+    .attr('x', 10)
+    .attr('y', 2)
+    .attr('class', 'legendText')
+    .style('font-size', 12)
+    .text('Republicans')
+
+legendG.append('circle')
+    .attr('cx', 0)
+    .attr('cy', 1 * legendDelta)
+    .attr('r', 2)
+    .style('fill', 'blue');
+
+legendG.append('text')
+    .attr('x', 10)
+    .attr('y', 1 * legendDelta + 3)
+    .attr('class', 'legendText')
+    .style('font-size', 12)
+    .text('Democrats')
+
+legendG.append('circle')
+    .attr('cx', 0)
+    .attr('cy', 2 * legendDelta + 3)
+    .attr('r', 5)
+    .style('fill', 'gold');
+
+legendG.append('text')
+    .attr('x', 10)
+    .attr('y', 2 * legendDelta + 3 + 3)
+    .attr('class', 'legendText')
+    .style('font-size', 12)
+    .text('President')
+
+legendG.append('circle')
+    .attr('cx', 0)
+    .attr('cy', 3 * legendDelta + 3 + 3)
+    .attr('r', 5)
+    .style('fill', 'Sienna');
+
+legendG.append('text')
+    .attr('x', 10)
+    .attr('y', 3 * legendDelta + 3 + 3 + 3)
+    .attr('class', 'legendText')
+    .style('font-size', 12)
+    .text(function() {
+        return 'Ideology Score Unknown';
+    });
+
+legendG.append('circle')
+    .attr('cx', 0)
+    .attr('cy', 4 * legendDelta + 3 + 3 + 3)
+    .attr('r', 5)
+    .style('fill', 'black');
+
+legendG.append('text')
+    .attr('x', 10)
+    .attr('y', 4 * legendDelta + 3 + 3 + 3 + 3)
+    .attr('class', 'legendText')
+    .style('font-size', 12)
+    .text('Medium Democratic Ideology');
+
+legendG.append('circle')
+    .attr('cx', 0)
+    .attr('cy', 5 * legendDelta + 3 + 3 + 3 + 3)
+    .attr('r', 5)
+    .style('fill', 'green');
+
+legendG.append('text')
+    .attr('x', 10)
+    .attr('y', 5 * legendDelta + 3 + 3 + 3 + 3 + 3)
+    .attr('class', 'legendText')
+    .style('font-size', 12)
+    .text('Medium Republican Ideology');
+
 // load the data and do the job
 d3.csv('initial_data.csv', dataPreprocessor).then(function(dataset) {
     var original_data = dataset;
@@ -121,6 +212,18 @@ d3.csv('initial_data.csv', dataPreprocessor).then(function(dataset) {
         text.append('text')
             .attr('x', 5)
             .attr('y', 180)
+            .attr('class', 'zoomedInText')
+            .text(function(d) {
+                var str = "Name: " + d.name;
+                return str;
+            })
+            .attr("font-size", "20px")
+            .attr("fill", 'steelblue');
+
+        text.append('text')
+            .attr('x', 5)
+            .attr('y', 180 + 25)
+            .attr('class', 'zoomedInText')
             .text(function(d) {
                 console.log(d);
                 var intCongArr = [];
@@ -129,9 +232,41 @@ d3.csv('initial_data.csv', dataPreprocessor).then(function(dataset) {
                 var maxCong = d3.extent(intCongArr)[1].toString();
                 if (maxCong == '116' || d.name === "TRUMP, Donald John") maxCong = " to now";
                 else maxCong = " ~ " + maxCong;
-                var str = "Name: " + d.name + "\n" + "Congress: " + minCong + maxCong;
+                var str = "Congress: " + minCong + maxCong;
                 console.log(str);
                 return str;
+            })
+            .attr("font-size", "20px")
+            .attr("fill", 'steelblue');
+
+        text.append('text')
+            .attr('x', 5)
+            .attr('y', 180 + 50)
+            .attr('class', 'zoomedInText')
+            .text(function(d) {
+                console.log('here');
+                console.log(d);
+                return "Dimension1 Ideology Score: " + (d.dim1 === "" ? "Unknown" : d.dim1);
+            })
+            .attr("font-size", "20px")
+            .attr("fill", 'steelblue');
+
+        text.append('text')
+            .attr('x', 5)
+            .attr('y', 180 + 75)
+            .attr('class', 'zoomedInText')
+            .text(function(d) {
+                return "Party: " + ((d.party === '200') ? 'Republican' : 'Democratic');
+            })
+            .attr("font-size", "20px")
+            .attr("fill", 'steelblue');
+
+        text.append('text')
+            .attr('x', 5)
+            .attr('y', 180 + 100)
+            .attr('class', 'zoomedInText')
+            .text(function(d) {
+                return "Chamber: " + d.chamber;
             })
             .attr("font-size", "20px")
             .attr("fill", 'steelblue');
@@ -255,8 +390,8 @@ d3.csv('initial_data.csv', dataPreprocessor).then(function(dataset) {
             return 3;
         })
         .style('fill', function(d, i) {
-            if (d.party === '200') return 'blue';
-            else return 'red';
+            if (d.party === '200') return 'red';
+            else return 'blue';
         })
         // details on demand for each member dot
         .on('click', function(d) {
@@ -452,9 +587,10 @@ function drawPoints(thatCongressData) {
         })
         // Republicans(200), Democrats(100)
         .style('fill', function(d, i) {
-            if (d.chamber === 'President') return 'gold';
-            else if (d.party === '200') return 'blue';
-            else return 'red';
+            if (d.icpsr === '99912') return 'Sienna'; // trump
+            else if (d.chamber === 'President') return 'gold';
+            else if (d.party === '200') return 'red';
+            else return 'blue';
         });
 
 
@@ -625,6 +761,8 @@ function compressData(originalData) {
             curObj['name'] = curRow.name;
             curObj['congress'] = [curRow.congress];
             curObj['dim1'] = curRow.dim1;
+            curObj['chamber'] = curRow.chamber;
+            curObj['party'] = curRow.party;
             res[curIcpsr] = curObj;
         } else {
             curObj = res[curIcpsr];
@@ -732,9 +870,7 @@ var path = d3.geoPath();
                     drawTrace(traceData[congInt]);
                     drawBars(traceData[congInt]);
                 }
-
             });
-
     });
 
 

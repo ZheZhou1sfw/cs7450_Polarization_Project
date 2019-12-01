@@ -36,6 +36,7 @@ var zoomedInFrame = zoomedInG.append('rect')
     .attr('height', zoomedInHeight)
     .style('fill', '#FDEBD0');
 
+
 // load the data and do the job
 d3.csv('real_initial_data.csv', dataPreprocessor).then(function(dataset) {
     var original_data = dataset;
@@ -128,7 +129,7 @@ d3.csv('real_initial_data.csv', dataPreprocessor).then(function(dataset) {
             .text(function(d) {
                 console.log('here');
                 console.log(d);
-                return "Median Ideology Score: " + (d.dim1 === "" ? "Unknown" : d.dim1);
+                return "Dimension1 Ideology Score: " + (d.dim1 === "" ? "Unknown" : d.dim1);
             })
             .attr("font-size", "20px")
             .attr("fill", 'steelblue');
@@ -605,7 +606,7 @@ d3.csv('real_initial_data.csv', dataPreprocessor).then(function(dataset) {
             else return 0.06;
         })
         .style('fill', function(d) {
-            if (d.icpsr === '99912') return '#ffffff';// trump
+            if (d.icpsr === '99912') return 'Sienna';// trump
             else if (d.chamber === 'President') return 'gold'; // president
             else if (d.party === '200') return 'red'; // republican
             else return 'blue'; // democrats
