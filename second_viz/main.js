@@ -1,6 +1,6 @@
 // Setting up global width and length, and padding sizes
 let globalWidth = 1200, globalHeight = 1000;
-paddings = {top : 100, bottom : 120, left : 40, right : 20};
+paddings = {top : 100, bottom : 120, left : 70, right : 20};
 
 // create and select the global svg
 let svg = d3.select("body")
@@ -46,8 +46,8 @@ var showState = false;
 
 // Create the zoomed-in visualization group
 var zoomedInPos = {
-    left: globalWidth / 2.5,
-    top: paddings.top / 3,
+    left: globalWidth / 20,
+    top: paddings.top + 30,
 };
 
 let zoomedInG = svg.append('g')
@@ -59,7 +59,7 @@ let zoomedInG = svg.append('g')
 
 // Create a pre-rendered rectangle frame for zoomed in viz
 var zoomedInWidth = globalWidth / 4;
-var zoomedInHeight = globalHeight / 4;
+var zoomedInHeight = globalHeight / 3;
 
 var zoomedInFrame = zoomedInG.append('rect')
     .attr('x', 0)
@@ -81,7 +81,7 @@ var globalTitleG = mainG.append('g')
 // Add a group for legends
 var legendG = svg.append('g')
     .attr('transform', function() {
-        var tempWidth = globalWidth * 6 / 7;
+        var tempWidth = globalWidth * 4 / 5;
         var tempHeight = globalHeight / 15;
         return 'translate('+[tempWidth, tempHeight]+')'
     });
@@ -126,7 +126,7 @@ legendG.append('text')
     .attr('y', 2 * legendDelta + 3 + 3)
     .attr('class', 'legendText')
     .style('font-size', 12)
-    .text('President')
+    .text('Presidents')
 
 legendG.append('circle')
     .attr('cx', 0)
@@ -168,6 +168,21 @@ legendG.append('text')
     .attr('class', 'legendText')
     .style('font-size', 12)
     .text('Medium Republican Ideology');
+
+
+// Add a group for state information
+var politicianCountG = svg.append('g')
+    .attr('transform', function() {
+        var tempWidth = globalWidth * 4 / 5;
+        var tempHeight = globalHeight / 3;
+        return 'translate('+[tempWidth, tempHeight]+')'
+});
+
+// global variable that traces the number of republicans for current congress & state
+var republicansNumbers;
+var democratsNumbers;
+
+
 
 // load the data and do the job
 d3.csv('initial_data.csv', dataPreprocessor).then(function(dataset) {
@@ -370,10 +385,33 @@ d3.csv('initial_data.csv', dataPreprocessor).then(function(dataset) {
         .attr('transform', 'translate('+[0, globalHeight - xAxisPadding - paddings.bottom - paddings.top]+')')
         .call(xAxis);
 
+    // add label to xAxis
+    var xAxisText = mainVizXAxis.append('text')
+        .attr('x', globalWidth / 2)
+        .attr('y', 100)
+        .attr('class', 'xAxisLabel')
+        .text("Dimension one score")
+        .attr("font-size", "30px")
+        .attr("fill", '#000000');
+
     var mainVizYAxis = axisGroup.append('g')
         .attr('class', 'axis y')
         .attr('transform', 'translate('+[0, -xAxisPadding]+')')
         .call(yAxis);
+
+    // add label to xAxis
+    var yAxisText = mainVizYAxis.append('text')
+        .attr("transform", "rotate(-90)")
+        .attr('x', function() {
+            return -1 * globalHeight / 4;
+        })
+        .attr('y', function() {
+            return -35;
+        })
+        .attr('class', 'yAxisLabel')
+        .text("Dimension two score")
+        .attr("font-size", "30px")
+        .attr("fill", '#000000');
 
     // draw basic circles:
     circleGroup.selectAll('circle')
@@ -405,6 +443,33 @@ d3.csv('initial_data.csv', dataPreprocessor).then(function(dataset) {
         .on('mouseout', function(d) {
             tooltip1.hide();
         });
+
+    // draw default number counts
+    console.log(dataByCong['97']);
+
+    republicansNumbers = 0;
+    democratsNumbers = 0;
+    for (var i = 0; i < dataByCong['97'].length; i++) {
+        var curRow = dataByCong['97'][i];
+        if (curRow.party === '200') republicansNumbers += 1;
+        else democratsNumbers += 1;
+    }
+
+    politicianCountG.append('text')
+        .attr('x', 0)
+        .attr('y', 0)
+        .text(function() {
+            return "#republicans: " + republicansNumbers;
+        })
+        .attr("font-size", "20px");
+
+    politicianCountG.append('text')
+        .attr('x', 0)
+        .attr('y', 25)
+        .text(function() {
+            return "#democrats: " + democratsNumbers;
+        })
+        .attr("font-size", "20px");
 
     // draw default title
     globalTitleG.append('text')
@@ -593,10 +658,37 @@ function drawPoints(thatCongressData) {
             else return 'blue';
         });
 
+    // Update politician counts text
+        // console.log(thatCongressData);
+    politicianCountG.selectAll('text').remove();
+
+    republicansNumbers = 0;
+    democratsNumbers = 0;
+
+    for (var i = 0; i < thatCongressData.length; i++) {
+        var curRow = thatCongressData[i];
+        if (curRow.party === '200') republicansNumbers += 1;
+        else democratsNumbers += 1;
+    }
+
+    politicianCountG.append('text')
+        .attr('x', 0)
+        .attr('y', 0)
+        .text(function() {
+            return "#republicans: " + republicansNumbers;
+        })
+        .attr("font-size", "20px");
+
+    politicianCountG.append('text')
+        .attr('x', 0)
+        .attr('y', 25)
+        .text(function() {
+            return "#democrats: " + democratsNumbers;
+        })
+        .attr("font-size", "20px");
 
 
-
-    console.log(circles);
+    //console.log(circles);
 }
 
 //
