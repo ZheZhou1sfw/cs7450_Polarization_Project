@@ -1,6 +1,6 @@
 // Setting up global width and length, and padding sizes
 var globalWidth = 1200, globalHeight = 1000;
-paddings = {top : 100, bottom : 20, left : 40, right : 20};
+paddings = {top : 100, bottom : 55, left : 60, right : 20};
 
 // create and select the global svg
 var svg = d3.select("body")
@@ -169,16 +169,20 @@ d3.csv('real_initial_data.csv', dataPreprocessor).then(function(dataset) {
                 return yScale(icpsrToPersonMap[icpsr].dim1)
             })
             .attr('r', function(d) {
-                return 10;
+                return 8;
             })
             .style('opacity', function(d) {
                 if (d.chamber === 'President') return 1;
                 else return 1;
             })
             .style('fill', function(d) {
+                return 'white';
+                /*
                 if (d.chamber === 'President') return 'gold'; // president
                 else if (d.party === '200') return 'red'; // republican
                 else return 'blue'; // democrats
+
+                 */
             })
     }
 
@@ -414,10 +418,34 @@ d3.csv('real_initial_data.csv', dataPreprocessor).then(function(dataset) {
         .attr('transform', 'translate('+[0, globalHeight - xAxisPadding - paddings.bottom - paddings.top]+')')
         .call(xAxis);
 
+    // add label to xAxis
+    var xAxisText = mainVizXAxis.append('text')
+        .attr('x', globalWidth / 2)
+        .attr('y', 50)
+        .attr('class', 'xAxisLabel')
+        .text("Year / #Congress")
+        .attr("font-size", "30px")
+        .attr("fill", '#ffffff');
+
+
     var mainVizYAxis = axisGroup.append('g')
         .attr('class', 'axis y')
         .attr('transform', 'translate('+[0, -xAxisPadding]+')')
         .call(yAxis);
+
+    // add label to xAxis
+    var yAxisText = mainVizYAxis.append('text')
+        .attr("transform", "rotate(-90)")
+        .attr('x', function() {
+            return -1 * globalHeight / 4;
+        })
+        .attr('y', function() {
+            return -35;
+        })
+        .attr('class', 'yAxisLabel')
+        .text("Dimension one score")
+        .attr("font-size", "30px")
+        .attr("fill", '#ffffff');
 
     // Create the elements that tooltips use
     var tooltipGroup = mainG.append('g')
