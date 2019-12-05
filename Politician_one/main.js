@@ -118,7 +118,9 @@ Promise.all([
 
     var unitWidth = 3;
     var unitGap = 1;
-    var unitPerRow = 20;
+    var unitPerRow = 15;
+    var selectedWith = 4 * unitWidth;
+    var prevColor;
 
     var mainUnitG = mainG.append('g')
         .attr('transform', function(){
@@ -215,6 +217,17 @@ Promise.all([
                             return "About this bill: " + d.description;
                         })
                 }
+            })
+            .on('mouseover', function() {
+                d3.select(this).attr('width', selectedWith);
+                d3.select(this).attr('height', selectedWith);
+                prevColor = d3.select(this).style('fill');
+                d3.select(this).style('fill', 'gold');
+            })
+            .on('mouseout', function() {
+                d3.select(this).attr('width', unitWidth);
+                d3.select(this).attr('height', unitWidth);
+                d3.select(this).style('fill', prevColor);
             })
         ;
 
