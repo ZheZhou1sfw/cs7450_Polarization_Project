@@ -185,8 +185,12 @@ var democratsNumbers;
 
 
 // load the data and do the job
-d3.csv('initial_data.csv', dataPreprocessor).then(function(dataset) {
-    var original_data = dataset;
+Promise.all([
+    d3.csv('initial_data.csv', dataPreprocessor)
+
+])
+.then(function(dataset) {
+    var original_data = dataset[0];
 
     console.log(original_data);
 
@@ -335,7 +339,7 @@ d3.csv('initial_data.csv', dataPreprocessor).then(function(dataset) {
         dataByCong[curRow.congress].push(curRow);
     }
 
-    // process traceData: trace[97][0][0] - republican's median dim1 of 97th congress. trace[97][1] - median dim2 of 97th congress
+    // process traceData: trace[97][0][0] - republican's median dim1 of 97th congress. trace[97][0][1] - median dim2 of republican's 97th congress
     traceData = {};
     for (var cong = 97; cong <= 116; cong++) {
         var RepubAllDim1 = [];
@@ -356,6 +360,7 @@ d3.csv('initial_data.csv', dataPreprocessor).then(function(dataset) {
         traceData[cong].push([d3.median(DemocAllDim1), d3.median(DemocAllDim2)]);
     }
 
+
     dataByStateByCong = processData(dataByCong);
     console.log(dataByStateByCong);
 
@@ -367,6 +372,24 @@ d3.csv('initial_data.csv', dataPreprocessor).then(function(dataset) {
     yScale = d3.scaleLinear()
         .domain([-1, 1])
         .range([globalHeight - paddings.top - paddings.bottom, 0]);
+
+
+
+    // preprocess datapoints for two path
+
+    allRepubDataPoints = [];
+    for (var i = 97; i <= 116; i++) {
+        allRepubDataPoints.push([xScale(traceData[i][0][0]), yScale(traceData[i][0][1])]);
+    }
+    console.log(allRepubDataPoints);
+
+    allDemocDataPoints = [];
+    for (var i = 97; i <= 116; i++) {
+        allDemocDataPoints.push([xScale(traceData[i][1][0]), yScale(traceData[i][1][1])]);
+    }
+    console.log(allRepubDataPoints);
+
+
 
     // create the X and Y axis for the major visualization
     var xAxis = d3.axisBottom()
@@ -584,7 +607,7 @@ d3.csv('initial_data.csv', dataPreprocessor).then(function(dataset) {
             globalCong = congInt;
             if (!showState) {
                 drawPoints(dataByCong[congInt]);
-                drawTrace(traceData[congInt]);
+                drawTrace(congInt);
                 drawBars(traceData[congInt]);
             } else {
                 drawPoints(dataByStateByCong[globalTitleG.select('text').text()][congInt]);
@@ -707,7 +730,7 @@ var repubDataPoints = [];
 var democDataPoints = [];
 
     // trace[0][0] - republican's median dim1 of 97th congress. trace[97][1] - median dim2 of 97th congress
-function drawTrace(thatTraceData) {
+function drawTrace(congInt) {
     //console.log(thatTraceData);
     var repubCircle = repubTraceG.select('circle');
         //.data(thatTraceData[0]);
@@ -721,10 +744,10 @@ function drawTrace(thatTraceData) {
     repubCircle.transition()
         .duration(500)
         .attr('cx', function (d, i) {
-            return xScale(thatTraceData[0][0]);
+            return xScale(traceData[congInt][0][0]);
         })
         .attr('cy', function (d, i) {
-            return yScale(thatTraceData[0][1]);
+            return yScale(traceData[congInt][0][1]);
         })
         .attr('r', function (d, i) {
             return 6;
@@ -734,6 +757,17 @@ function drawTrace(thatTraceData) {
             return "black";
         });
 
+    repubTraceG.selectAll('path').remove();
+    var tempRepubDataPoints = allRepubDataPoints.slice(0, congInt - 97 + 1);
+    var repubPathData = lineGenerator(tempRepubDataPoints);
+    repubTraceG.append('path')
+        .attr('d', repubPathData)
+        .style('fill', 'none')
+        .style('stroke', 'steelblue')
+        .attr("stroke-width", 2);
+
+
+/*
     repubDataPoints.push([xScale(thatTraceData[0][0]), yScale(thatTraceData[0][1])])
     //console.log(repubDataPoints);
     var repubPathData = lineGenerator(repubDataPoints);
@@ -743,7 +777,7 @@ function drawTrace(thatTraceData) {
         .style('fill', 'none')
         .style('stroke', 'steelblue')
         .attr("stroke-width", 2);
-
+*/
 
 // ----------------------------------------------------------
 
@@ -759,10 +793,10 @@ function drawTrace(thatTraceData) {
     democCircle.transition()
         .duration(500)
         .attr('cx', function (d, i) {
-            return xScale(thatTraceData[1][0]);
+            return xScale(traceData[congInt][1][0]);
         })
         .attr('cy', function (d, i) {
-            return yScale(thatTraceData[1][1]);
+            return yScale(traceData[congInt][1][1]);
         })
         .attr('r', function (d, i) {
             return 6;
@@ -772,6 +806,16 @@ function drawTrace(thatTraceData) {
             return "green";
         });
 
+
+    democTraceG.selectAll('path').remove();
+    var tempDemocDataPoints = allDemocDataPoints.slice(0, congInt - 97 + 1);
+    var democPathData = lineGenerator(tempDemocDataPoints);
+    democTraceG.append('path')
+        .attr('d', democPathData)
+        .style('fill', 'none')
+        .style('stroke', 'orange')
+        .attr("stroke-width", 2);
+    /*
     democDataPoints.push([xScale(thatTraceData[1][0]), yScale(thatTraceData[1][1])])
     //console.log(democDataPoints);
     var democPathData = lineGenerator(democDataPoints);
@@ -781,7 +825,7 @@ function drawTrace(thatTraceData) {
         .style('fill', 'none')
         .style('stroke', 'orange')
         .attr("stroke-width", 2);
-
+    */
 }
 
 // the function for drawing bars for zoomedIn Graph
@@ -839,6 +883,10 @@ function dataPreprocessor(row) {
         'dim2': row['nominate_dim2'],
     };
 }
+
+
+
+
 
 // data compressing for fast individual look up based on icpsr
 
@@ -959,7 +1007,7 @@ var path = d3.geoPath();
                 } else {
                     //drawPoints(dataByCong[congInt]);
                     drawPoints(dataByCong[congInt]);
-                    drawTrace(traceData[congInt]);
+                    drawTrace(congInt);
                     drawBars(traceData[congInt]);
                 }
             });
