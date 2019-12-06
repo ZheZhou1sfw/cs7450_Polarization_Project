@@ -58,7 +58,22 @@ legendG.append('text')
     .attr('y', 8 + 15)
     .text('Vote followed the trend of the party');
 
+var mainUnitG = mainG.append('g')
+    .attr('transform', function(){
+        var tempX = 0;
+        var tempY = globalHeight * 3 / 4;
+        return 'translate('+[tempX, tempY]+')'
+    });
 
+// subgroup from mainUnitG
+var unitsG = mainUnitG.append('g');
+var labelG = mainUnitG.append('g');
+var percentageG = mainUnitG.append('g')
+    .attr('visibility', 'hidden');
+
+
+var lineChartG = mainG.append('g')
+    .attr('visibility', 'hidden');
 
 // load the data and do the job
 Promise.all([
@@ -106,7 +121,7 @@ Promise.all([
     console.log(votesByCongress);
 
     // Set up a place holder for text
-    var textG = mainG.append('g')
+    var textG = labelG.append('g')
         .attr('transform', function(){
             var tempX = globalWidth / 3;
             var tempY = globalHeight / 8;
@@ -122,16 +137,25 @@ Promise.all([
     var selectedWith = 4 * unitWidth;
     var prevColor;
 
-    var mainUnitG = mainG.append('g')
-        .attr('transform', function(){
-            var tempX = 0;
-            var tempY = globalHeight * 3 / 4;
-            return 'translate('+[tempX, tempY]+')'
-        });
+    // scales used for line chart
+
+    // reposition the lineChartG
+    var xOffset = (globalWidth / (votesByCongress.length + 10)) / 2; // only take half of the width of a bar as offset
+
+    var xScale = d3.scaleLinear()
+        .domain([0, votesByCongress.length - 1])
+        .range([xOffset, globalWidth - paddings.right - paddings.left - xOffset]);
+
+    var yScale = d3.scaleLinear()
+        .domain([50, 100])
+        .range([-100, -globalHeight * 2 / 3]);
+
+    // create the data that will be used in drawing the line chart
+    var lineChartData = []; // lineChartData[0] = {idx : 0, percentage: 50}
 
     var curXOffset = 0;
     for (var i = 0; i < votesByCongress.length; i++) {
-        var curG = mainUnitG.append('g')
+        var curG = unitsG.append('g')
             .attr('transform', function(){
                 var tempX = curXOffset;
                 var tempY = 0;
@@ -139,14 +163,27 @@ Promise.all([
             });
 
 
+        var curTextG = labelG.append('g')
+            .attr('transform', function(){
+                var tempX = curXOffset;
+                var tempY = 0;
+                return 'translate('+[tempX, tempY]+')'
+            });
+
         // append a label
-        curG.append('text')
+        curTextG.append('text')
             .attr('x', 3)
             .attr('y', 30)
             .text(function() {
                 return votesByCongress[i].key + "th";
             })
 
+        var curPercentageG = percentageG.append('g')
+            .attr('transform', function(){
+                var tempX = curXOffset;
+                var tempY = 0;
+                return 'translate('+[tempX, tempY]+')'
+            });
 
 
 
@@ -154,13 +191,21 @@ Promise.all([
         var againstThatCong = votesByCongress[i].values[1].values;
         var allData = supportThatCong.concat(againstThatCong);
 
+
+
+        var percentage = supportThatCong.length / allData.length * 100;
+        percentage = percentage.toFixed(1);
+        lineChartData.push({percentage: percentage, idx: i});
+
         // append a percentage
-        curG.append('text')
+        curPercentageG.append('text')
             .attr('x', 3)
-            .attr('y', -(allData.length / unitPerRow * (unitWidth + unitGap) + 10))
+            //.attr('y', -(allData.length / unitPerRow * (unitWidth + unitGap) + 10))
+            .attr('y', function() {
+                console.log(yScale(percentage));
+                return yScale(percentage * 7.1 / 8) ;
+            })
             .text(function() {
-                var percentage = supportThatCong.length / allData.length * 100;
-                percentage = percentage.toFixed(1);
                 return percentage.toString(10) + "%";
             });
 
@@ -326,6 +371,34 @@ Promise.all([
         .attr("fill", 'steelblue');
 
 
+    // draw line chart
+
+    lineChartG
+        .attr('transform', function(){
+            var tempX = 0;
+            var tempY = globalHeight * 7 / 8;
+            return 'translate('+[tempX, tempY]+')'
+        });
+
+    console.log(billsByCongress);
+
+    console.log(lineChartData);
+
+    lineChartG.append('path')
+        .datum(lineChartData)
+        .attr("fill", "none")
+        .attr("stroke", "DarkCyan")
+        .attr("stroke-width", 2)
+        .attr("d", d3.line()
+            .x(function(d) {
+                //console.log(xScale(d.idx));
+                return xScale(d.idx);
+            })
+            .y(function(d) {
+                //console.log(yScale(d.percentage))
+                return yScale(d.percentage);
+            })
+        )
 });
 
 
@@ -370,3 +443,18 @@ function dataPreprocessor(row) {
         'dim2': row['nominate_dim2'],
     };
 }
+
+var lineVisible = false;
+
+// button function
+d3.selectAll('.toggleLineChart')
+    .on('click', function() {
+        if (lineVisible) {
+            lineChartG.attr('visibility', 'hidden');
+            percentageG.attr('visibility', 'hidden');
+        } else {
+            lineChartG.attr('visibility', 'visible');
+            percentageG.attr('visibility', 'visible');
+        }
+        lineVisible = !lineVisible;
+    });
