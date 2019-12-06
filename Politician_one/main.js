@@ -62,7 +62,7 @@ legendG.append('text')
 
 // load the data and do the job
 Promise.all([
-    d3.csv('mikePenceTrend.csv', dataPreprocessorForFigure),
+    d3.csv('20304Trend.csv', dataPreprocessorForFigure),
     d3.csv('rollcalls.csv', dataPreprocessorForBills),
     d3.csv('real_initial_data.csv', dataPreprocessor)
 ])
@@ -153,7 +153,16 @@ Promise.all([
         var againstThatCong = votesByCongress[i].values[1].values;
         var allData = supportThatCong.concat(againstThatCong);
 
-        console.log()
+
+        // append a percentage
+        curG.append('text')
+            .attr('x', 3)
+            .attr('y', -(allData.length / unitPerRow * (unitWidth + unitGap) + 10))
+            .text(function() {
+                var percentage = supportThatCong.length / allData.length * 100;
+                percentage = percentage.toFixed(1);
+                return percentage.toString(10) + "%";
+            });
 
 
         curG.selectAll('rect')
@@ -238,7 +247,7 @@ Promise.all([
 
     // draw something about that person
 
-    var curIcpsr = '20117';
+    var curIcpsr = '20304';
 
     var personData;
 
