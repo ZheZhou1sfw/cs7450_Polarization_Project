@@ -42,8 +42,6 @@ var globalCong = 97;
 var showState = false;
 
 
-
-
 // Create the zoomed-in visualization group
 var zoomedInPos = {
     left: globalWidth / 20,
@@ -610,6 +608,7 @@ Promise.all([
                 drawTrace(congInt);
                 drawBars(traceData[congInt]);
             } else {
+                drawTrace(congInt);
                 drawPoints(dataByStateByCong[globalTitleG.select('text').text()][congInt]);
             }
         });
@@ -1004,6 +1003,7 @@ var path = d3.geoPath();
                 if (showState) {
                     drawPoints(dataByStateByCong[stateAbbr][congInt]);
                     drawPoints(dataByStateByCong[stateAbbr][congInt]);
+                    drawTrace(congInt);
                 } else {
                     //drawPoints(dataByCong[congInt]);
                     drawPoints(dataByCong[congInt]);
@@ -1014,3 +1014,38 @@ var path = d3.geoPath();
     });
 
 
+
+// Button controls
+var centroidsAreVisible = true;
+var membersAreVisible = true;
+var selectorIsVisible = true;
+
+d3.selectAll('.toggleCentroid')
+    .on('click', function() {
+        if (centroidsAreVisible) {
+            traceGroup.attr('visibility', 'hidden');
+        } else {
+            traceGroup.attr('visibility', 'visible');
+        }
+        centroidsAreVisible = !centroidsAreVisible;
+    });
+
+d3.selectAll('.toggleMemberDots')
+    .on('click', function() {
+        if (membersAreVisible) {
+            circleGroup.attr('visibility', 'hidden');
+        } else {
+            circleGroup.attr('visibility', 'visible');
+        }
+        membersAreVisible = !membersAreVisible;
+    });
+
+d3.selectAll('.toggleSelector')
+    .on('click', function() {
+        if (selectorIsVisible) {
+            stateG.attr('visibility', 'hidden');
+        } else {
+            stateG.attr('visibility', 'visible');
+        }
+        selectorIsVisible = !selectorIsVisible;
+    });
