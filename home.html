@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="theme-color" content="#1D1D1D">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Campskil</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.2.0/dist/css/autoComplete.min.css">
+    <link rel="stylesheet" type="text/css" href="css/fonts/style.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/scrollingCss.css">
+    <link rel="stylesheet" href="https://use.typekit.net/wdw4vlh.css">
+    <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <style>
+
+    </style>
+    <script src="../../InfoVizProjectDemo/lib/main.js"></script>
+</head>
+
+<body>
+  <section class="is-hidden-mobile">
+    <nav class="navbar" role="navigation" aria-label="main navigation" style="padding-top: 2rem; padding-right: 2rem;">
+      <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+      <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-end">
+          <a class="navbar-item nav-link" href="https://adikundu.github.io/">
+            <span><nobr>Home</nobr></span>
+          </a>
+          <a class="navbar-item nav-link" href="https://adikundu.github.io/about">
+            <span><nobr>About</nobr></span>
+          </a>
+          <a class="navbar-item active-nav-link" href="https://adikundu.github.io/#project-section">
+            <span><nobr>Projects</nobr></span>
+          </a>
+        </div>
+      </div>
+    </nav>
+  </section>
+
+    <section class="hero" style="margin-top: 10rem;">
+        <div class="hero-body">
+            <div class="columns">
+                <div class="column is-1">
+                </div>
+                <div class="column is-4">
+                        <p class="project-heading is-size-3">Political Polarization in the U.S. Congress.</p>
+                        <p class="subheading is-size-7">Visualizing how the Republicans and Democrats have grown increasingly divided in ideology over the past years. </p>
+                        <p class="subheading-credits is-size-7">By <a class="is-text-link" href=""><span><nobr>Zhe Zhou</nobr></span></a>  and <a class="is-text-link" href=""><span><nobr>Aditya Kundu</nobr></span></a></p>       
+                </div>
+                <div class="column is-4 is-offset-2" id="imageToLock1">
+                    <img src="css/assets/Fig1.png" >
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+  <section class="hero">
+        <div class="hero-body">
+            <div class="columns">
+                <div class="column is-1">
+                </div>
+                <div class="column is-4">
+                    <p class="project-heading is-size-4 has-text-grey-lighter" id="testPart0">Prologue</p>
+                    <p class="is-size-6" id="testPart1">The two parties in power of the U.S. government have been at odds with each other for quite a long time. However, in recent years, political partisanship has had stark detrimental effects.</span></a></p>
+                    <p class="is-size-6" id="testPart2">Deadlocks amongst parties have caused a reduction in the quantity and quality of legislation passed. </p>
+                    <p class="is-size-6" id="testPart3">The country also saw its longest government shutdown ever at the end of 2018, over a dispute related to the funding of the U.S./Mexico border wall.</p>
+                    <p class="is-size-6" id="testPart4">It cost the U.S. economy about $3.6 billion and affected 800,000 federal employees.</p>
+                    <p class="is-size-6" id="testPart5">Let’s understand what went wrong.</p>
+                </div>
+                <div class="column is-4 is-offset-2" >
+                </div>  
+            </div>
+        </div>
+    </section>
+
+    <br><br><br><br><br><br><br><br><br><br>
+
+
+
+    <section class="hero">
+        <div class="hero-body">
+            <div class="columns">
+                <div class="column is-1">
+                    <p class="has-text-right section-number is-size-4">1/5</p>
+                </div>
+                <div class="column is-4">
+                    <p class="project-heading is-size-4">Using normalized scores for political ideologies.</p>
+                    <p class="is-size-6" id="testPart6">To understand patterns in how representatives vote, we are using <code>dw-nominate</code> scores to quantify their political ideology.</span></a></p>
+                    <p class="is-size-6" id="testPart7">Based on a representative’s voting history in Congress, they are assigned a score ranging from -1 to +1 which ranges from extremely liberal to extremely conservative respectively.</p>
+                    <p class="is-size-6" id="testPart8">These scores are calculated by analyzing roll-call voting patterns and used to investigate trends in party-line voting and party unity.</p>
+                </div>
+                <div class="column is-4 is-offset-2" id="imageToLock2">
+                    <img src="css/assets/Fig2.png">
+                </div>  
+            </div>
+        </div>
+    </section>
+
+  <!-- place for viz1 -->
+    <div class="container is-fluid" style="margin-left: 0rem; margin-right: 0rem; border-radius: 0rem;">
+        <section style=" background-size: cover; background-color: #141414; margin-bottom: 5rem;" class="hero is-medium section-hero-mod full-size-mod" id = "viz1ToLock">
+            <div class="hero-padding-mod hero-body viz1Place">
+                <!-- Things that I added for viz1, mainly are buttons including animation buttons and search box-->
+
+
+                <div class="btn-group btn-group-sm" data-toggle="buttons">
+                    <label class="btn btn-secondary" data-type="brushing_on">
+                        <input type="checkbox" name="options" autocomplete="off">ZoomedIn on
+                    </label><br>
+                    <label class="btn btn-secondary active" data-type="brushing_off">
+                        <input type="checkbox" name="options" autocomplete="off" checked>ZoomedIn off
+                    </label><br>
+                </div><br>
+                <button type="button" class="highlightTwoLines" style="display: none;">Highlight three lines</button>
+                <button type="button" class="resumeTwoLines" style="display: none">Resume three lines</button>
+                <button type="button" class="highlightOnePoint" style="display: none">Highlight one point</button>
+                <button type="button" class="highlight2019" style="display: none">Highlight 2019</button>
+                <button type="button" class="resume2019" style="display: none">Resume 2019</button>
+                <button type="button" class="highlight0040" style="display: none">Highlight 1900-1940</button>
+                <button type="button" class="highlight4080" style="display: none">Highlight 1940-1980</button>
+                <button type="button" class="highlight8020" style="display: none">Highlight 1980-2019</button>
+                <button type="button" class="resumeMemberDots" style="display: none">Resume member dots</button><br>
+                <input type="text" name="Name" id="autoComplete">
+
+
+                <!-- End ------------------------------------------------------------------------->
+
+                <div class="column is-4">
+                    <p class="is-size-6 has-text-white" id="viz1Text"></p>
+                    <!--
+                    <p class="is-size-6 has-text-white" id="viz1Text">There existed divergent ideologies at the turn of the 20th century. The country was undergoing major economic transitions and debating its role in a changing international order.</p>
+                    <p class="is-size-6 has-text-white">In the post-war era, as issues like civil rights, the Vietnam War, and the environment emerged as dividing issues, voters continued to exhibit high levels of cross-party voting in congressional elections.</p>
+                    <p class="is-size-6 has-text-white">In recent history, increasing partisanship has led to divisive politics and politicians barely voting across party lines. Note the diverging trend in the visualization.</p>
+                    <p class="is-size-6 has-text-white">Feel free to explore the visualization. When ready, scroll down.</p>
+                    -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+
+    <section class="hero">
+        <div class="hero-body" style="padding-bottom: 0rem;">
+            <div class="columns">
+                <div class="column is-1">
+                    <p class="has-text-right section-number is-size-4">2/5</p>
+                </div>
+                <div class="column is-4">
+                    <p class="project-heading is-size-4">How does increased polarization affect voting patterns?</p><br><br><br><br><br>
+                    <p class="is-size-6" id="testPart11">Let’s take a look at the democrat, John Conyers Jr.</p><br><br><br><br><br>
+                    <p class="is-size-6" id="testPart12">Over the course of his large tenure, Conyers voted on 2341 bills in Congress.</p> <br><br><br><br><br>
+                    <p class="is-size-6" id="testPart13">Talk about how X’s votes have been increasingly aligned with party lines.</p><br><br><br><br><br>
+                    <p class="is-size-6" id="testPart14">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nec dui nunc mattis enim ut.</p><br><br><br><br><br>
+                </div>
+                <div class="column is-4 is-offset-2 politician2Place" id="politician2Place">
+                    <!--
+                    <img src="css/assets/Fig3.png"> -->
+                    <button type="button" class="toggleLineChart">Show/Hide line</button><br>
+                </div>  
+            </div>
+        </div>
+    </section>
+
+
+    <section class="hero">
+        <div class="hero-body" style="padding-top: 0rem;">
+            <div class="columns">
+                <div class="column is-1">
+                </div>
+                <div class="column is-4">
+                    <p class="is-size-6 has-text-weight-bold">But which party do I blame?</p>
+                    <p class="is-size-6" id="testPart16">While the polarization is indeed slightly asymmetric towards Republicans, that does not mean that the GOP is to be directly implicated during government shutdowns.</p>
+                    <br><br><br><br>
+                    <p class="is-size-6" id="testPart17">Taking a closer look at the data, we can understand the right-left shift in more detail.</p>
+                </div>
+                <div class="column is-4 is-offset-2">
+                    <img src="css/assets/Fig5.png">
+                </div>  
+            </div>
+        </div>
+    </section>
+
+    <section class="hero">
+        <div class="hero-body" style="padding-bottom: 0rem;">
+            <div class="columns">
+                <div class="column is-1">
+                    <p class="has-text-right section-number is-size-4">3/5</p>
+                </div>
+                <div class="column is-4">
+                    <p class="project-heading is-size-4">Adding in another dimension</p>
+                    <p class="is-size-6" id="testPart18">The next visualization adds another <code>dw-nominate</code> dimension.</p>
+                    <br><br><br><br>
+                    <p class="is-size-6" id="testPart19">This second dimension picks up attitudes on cross-cutting, salient issues of the day (which include or have included slavery, civil rights, regional, and social/lifestyle issues).</p>
+                </div>
+                <div class="column is-4 is-offset-2">
+                    <img src="css/assets/Fig6.png">
+                </div>  
+            </div>
+        </div>
+    </section>
+
+    <!-- Place for viz2 -->
+    <div class="container is-fluid" style="margin-left: 0rem; margin-right: 0rem; border-radius: 0rem;" id = "viz2ToLock">
+        <section style=" background-size: cover; background-color: #141414; margin-bottom: 5rem;" class="hero is-medium section-hero-mod full-size-mod">
+            <div class="hero-padding-mod hero-body viz2Place">
+                <button type="button" class="toggleCentroid">Show/Hide centroid</button>
+                <button type="button" class="toggleMemberDots">Show/Hide members</button>
+                <button type="button" class="toggleSelector">Show/Hide state selector</button>
+                <button type="button" class="highlight8095">Highlight the first period</button>
+                <button type="button" class="highlight9511">Highlight the second period</button>
+                <button type="button" class="highlight1119">Highlight the third period</button><br>
+                <div class="column is-4">
+                    <p class="is-size-6 has-text-white">In the 1980s, ideologies are spread across the political spectrum.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <section class="hero">
+            <div class="hero-body" style="padding-bottom: 0rem;">
+                <div class="columns">
+                    <div class="column is-1">
+                    </div>
+                    <div class="column is-4">
+                        <p class="project-heading is-size-4 has-text-grey-lighter">Epilogue</p>
+                        <p class="is-size-6" id="testPart21">Polarization, in politics, refers to the divergence of political attitudes towards extremes.</p>
+                        <br><br><br><br>
+                        <p class="is-size-6" id="testPart22">Republicans and Democrats have always been opposing each other over bills and ideas on what the future of the country should look like. This is how a bi-party parliament works.</p>
+                    </div>
+                    <div class="column is-4 is-offset-2">
+                        <img src="css/assets/Fig7.png">
+                    </div>  
+                </div>
+            </div>
+        </section>
+    
+    <section class="hero">
+            <div class="hero-body" style="padding-top: 0rem;">
+                <div class="columns">
+                    <div class="column is-1">
+                    </div>
+                    <div class="column is-4">
+                        <p class="is-size-6" id="testPart23">However, in recent years, ideological differences in parties have been weaponized in order to win more seats in Congress. Party members are now reluctant to vote across party lines.</p>
+                        <br><br><br><br>
+                        <p class="is-size-6" id="testPart24">Polarization-induced partisan antipathy poses to be a threat to the healthy functioning of a parliamentary system. And with the current trend of increasing polarization, partisanship shall only become more pronounced.</p>
+                    </div>
+                    <div class="column is-4 is-offset-2">
+                        <img src="css/assets/Fig8.png">
+                    </div>  
+                </div>
+            </div>
+        </section>
+
+  <br><br><br><br><br><br><br><br><br><br>
+
+        <section class="hero">
+                <div class="hero-body">
+                    <div class="columns">
+                        <div class="column is-1"></div>
+                        <div class="column is-4">
+                            <p class="is-size-7">This webpage was developed as a part of the Information Visualization course taught by <a class="is-text-link"><span><nobr>Prof. John Stasko</nobr></span></a> at the Georgia Institute of Technology.</p>
+                            <p class="is-size-7">The data for this website has been sourced from <a class="is-text-link"><span><nobr>voteview.com</nobr></span></a>, hosted and maintained by UCLA’s Department of Political Science and Social Science Computing.</p>
+                            <p class="is-size-7">Thank you for your time!</p>
+                        </div>
+                        <div class="column is-4 is-offset-2">
+                                <p class="is-size-7">Zhe Zhou<br><a class="is-text-link"><span><nobr>Github </nobr></span></a><a class="is-text-link"><span><nobr>LinkedIn</nobr></span></a></p>
+                                <p class="is-size-7">Aditya Kundu<br><a class="is-text-link"><span><nobr>Portfolio </nobr></span></a><a class="is-text-link"><span><nobr>LinkedIn</nobr></span></a></p>
+                            </div>
+                    </div>
+                  </div>
+              </section>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/ScrollMagic.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/plugins/debug.addIndicators.min.js"></script>
+  <!--
+<script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>-->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+<script src="lib/d3.v5.min.js"></script>
+<script src="lib/d3-tip.js"></script>
+<script src="https://d3js.org/d3-color.v1.min.js"></script>
+<script src="https://d3js.org/d3-ease.v1.min.js"></script>
+<script src="https://d3js.org/d3-interpolate.v1.min.js"></script>
+<script src="https://d3js.org/d3-timer.v1.min.js"></script>
+<script src="https://d3js.org/d3-selection.v1.min.js"></script>
+<script src="https://d3js.org/d3-transition.v1.min.js"></script>
+<script src="https://d3js.org/d3-drag.v1.min.js"></script>
+<script src="https://d3js.org/d3-brush.v1.min.js"></script>
+<script src="https://unpkg.com/d3-simple-slider"></script>
+<script src="https://d3js.org/topojson.v2.min.js"></script>
+<script src="lib/stateToAbbr.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.4.5/fuse.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.2.0/dist/js/autoComplete.js"></script>
+
+<script src="lib/viz1.js"></script>
+
+<script src="lib/pol2.js"></script>
+
+<script src="lib/viz2.js"></script>
+
+<script type="text/javascript" src="lib/main.js"></script>
+
+</body>
+
+</html>
