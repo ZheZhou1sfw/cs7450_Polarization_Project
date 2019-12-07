@@ -595,7 +595,7 @@ Promise.all([
         .sliderBottom()
         .min(d3.min(dataTime))
         .max(d3.max(dataTime))
-        .step(1000 * 60 * 60 * 24 * 365)
+        .step(1000 * 60 * 60 * 24 * 365 * 2)
         .width(1000)
         .tickFormat(d3.timeFormat('%Y'))
         .tickValues(dataTime)
