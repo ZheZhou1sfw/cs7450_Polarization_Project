@@ -379,3 +379,95 @@ new ScrollMagic.Scene({
     .setClassToggle("#testPart14", "changeColor") // add class toggle
     .addIndicators() // add indicators (requires plugin)
     .addTo(controller);
+
+// lock politician2
+new ScrollMagic.Scene({
+  triggerElement: "#politician2Place",
+  duration: 300,
+  offset: 300, // move trigger to center of element
+})
+    .setPin("#politician2Place", {pushFollowers: true})
+    .addIndicators() // add indicators (requires plugin)
+    .addTo(controller);
+
+
+new ScrollMagic.Scene({
+  triggerElement: "#testPart16",
+  triggerHook: 0.4,
+  offset: 0, // move trigger to center of element
+  duration: 100
+})
+    .setClassToggle("#testPart16", "changeColor") // add class toggle
+    .addIndicators() // add indicators (requires plugin)
+    .addTo(controller);
+
+new ScrollMagic.Scene({
+  triggerElement: "#testPart17",
+  triggerHook: 0.4,
+  offset: 0, // move trigger to center of element
+  duration: 100
+})
+    .setClassToggle("#testPart17", "changeColor") // add class toggle
+    .addIndicators() // add indicators (requires plugin)
+    .addTo(controller);
+
+new ScrollMagic.Scene({
+  triggerElement: "#testPart18",
+  triggerHook: 0.4,
+  offset: 0, // move trigger to center of element
+  duration: 100
+})
+    .setClassToggle("#testPart18", "changeColor") // add class toggle
+    .addIndicators() // add indicators (requires plugin)
+    .addTo(controller);
+
+
+new ScrollMagic.Scene({
+  triggerElement: "#testPart19",
+  triggerHook: 0.4,
+  offset: 0, // move trigger to center of element
+  duration: 100
+})
+    .setClassToggle("#testPart19", "changeColor") // add class toggle
+    .addIndicators() // add indicators (requires plugin)
+    .addTo(controller);
+
+new ScrollMagic.Scene({
+  triggerElement: "#testPart21",
+  triggerHook: 0.4,
+  offset: 0, // move trigger to center of element
+  duration: 100
+})
+    .setClassToggle("#testPart21", "changeColor") // add class toggle
+    .addIndicators() // add indicators (requires plugin)
+    .addTo(controller);
+
+new ScrollMagic.Scene({
+  triggerElement: "#testPart22",
+  triggerHook: 0.4,
+  offset: 0, // move trigger to center of element
+  duration: 100
+})
+    .setClassToggle("#testPart22", "changeColor") // add class toggle
+    .addIndicators() // add indicators (requires plugin)
+    .addTo(controller);
+
+new ScrollMagic.Scene({
+  triggerElement: "#testPart23",
+  triggerHook: 0.4,
+  offset: 0, // move trigger to center of element
+  duration: 100
+})
+    .setClassToggle("#testPart23", "changeColor") // add class toggle
+    .addIndicators() // add indicators (requires plugin)
+    .addTo(controller);
+
+new ScrollMagic.Scene({
+  triggerElement: "#testPart24",
+  triggerHook: 0.4,
+  offset: 0, // move trigger to center of element
+  duration: 100
+})
+    .setClassToggle("#testPart24", "changeColor") // add class toggle
+    .addIndicators() // add indicators (requires plugin)
+    .addTo(controller);
