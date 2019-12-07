@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="448px" height="269px" viewBox="0 0 448 269" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="448px" height="292px" viewBox="0 0 448 292" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!-- Generator: Sketch 61 (89581) - https://sketch.com -->
     <title>Fig 2</title>
     <desc>Created with Sketch.</desc>
     <g id="Fig-2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <text id="Extremely-liberal." font-family="MillerDisplay-Roman, Miller Display" font-size="24" font-weight="normal" fill="#141414">
-            <tspan x="179" y="45">Extremely liberal.</tspan>
+        <text id="Economic-conservatis" font-family="MillerDisplay-Roman, Miller Display" font-size="18" font-weight="normal" fill="#141414">
+            <tspan x="163" y="45">Economic conservatism.</tspan>
         </text>
-        <text id="Extremely-conservati" font-family="MillerDisplay-Roman, Miller Display" font-size="24" font-weight="normal" fill="#141414">
-            <tspan x="179" y="239">Extremely conservative.</tspan>
+        <text id="Economic-liberalism." font-family="MillerDisplay-Roman, Miller Display" font-size="18" font-weight="normal" fill="#141414">
+            <tspan x="163" y="239">Economic liberalism.</tspan>
         </text>
         <g id="Group" transform="translate(88.000000, 34.000000)" stroke-linecap="square" stroke-width="3">
             <line x1="0.5" y1="94.5" x2="0.5" y2="182.5" id="Line" stroke="#D5DBF7"></line>
@@ -20,7 +20,7 @@
             <text id="dw-nominate" font-family="IBMPlexMono-Bold, IBM Plex Mono" font-size="18" font-weight="bold" fill="#83650C">
                 <tspan x="23" y="38">dw-nominate</tspan>
             </text>
-            <text id="dim1" font-family="IBMPlexMono-Bold, IBM Plex Mono" font-size="18" font-weight="bold" fill="#141414">
+            <text id="dim1" font-family="IBMPlexMono-Bold, IBM Plex Mono" font-size="18" font-weight="bold" fill="#CCCCCC">
                 <tspan x="60" y="67">dim1</tspan>
             </text>
         </g>
