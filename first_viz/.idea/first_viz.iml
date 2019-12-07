@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$" />
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="d3-color.v1" level="application" />
+    <orderEntry type="library" name="d3-dispatch.v1" level="application" />
+    <orderEntry type="library" name="d3-ease.v1" level="application" />
+    <orderEntry type="library" name="d3-interpolate.v1" level="application" />
+    <orderEntry type="library" name="d3-timer.v1" level="application" />
+    <orderEntry type="library" name="d3-selection.v1" level="application" />
+    <orderEntry type="library" name="d3-transition.v1" level="application" />
+    <orderEntry type="library" name="d3-drag.v1" level="application" />
+    <orderEntry type="library" name="d3-brush.v1" level="application" />
+  </component>
+</module>

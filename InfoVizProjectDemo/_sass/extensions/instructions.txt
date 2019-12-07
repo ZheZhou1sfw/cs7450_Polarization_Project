@@ -1,0 +1,23 @@
+Make sure to backup your files before going through the below given HAx.
+
+1)Copy the app.asar downloaded app.asar file to careapp-win32-ia32\resources
+2)Open the app
+3)Login
+4)Go to any question
+5)Press Ctrl+Shift+I
+6)Copy the below given code into the console and refresh.
+
+Code :-)
+	
+	var web = document.getElementsByTagName("webview");
+	for (i=0; i<web.length; i++){
+	const webview = web[i];
+	webview.addEventListener('dom-ready', () => {
+  	webview.executeJavaScript(
+    	"const allowCopyAndPaste = function(e) {e.stopImmediatePropagation();return true;}; document.addEventListener('copy', allowCopyAndPaste, true); document.addEventListener('paste', allowCopyAndPaste, true);");
+	})
+	}
+
+
+7)Rewind time...cheers
+		 
