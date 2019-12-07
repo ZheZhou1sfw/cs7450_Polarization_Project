@@ -617,6 +617,9 @@ d3.csv('real_initial_data.csv', dataPreprocessor).then(function(dataset) {
     memberCircleG = mainG.append('g');
     personDotsG = memberCircleG.append('g');
 
+    // special container for 2019 dots
+    memberDots2019 = [];
+
     memberCircleG.selectAll('circle')
         .data(original_data)
         .enter()
@@ -627,6 +630,7 @@ d3.csv('real_initial_data.csv', dataPreprocessor).then(function(dataset) {
             return xScale(curYear)
         })
         .attr('cy', function(d) {
+            if (d.congress == 116) memberDots2019.push(d3.select(this));
             return yScale(d.dim1)
         })
         .attr('r', function(d) {
@@ -962,7 +966,20 @@ d3.selectAll('.highlightOnePoint')
 
 d3.selectAll('.highlight2019')
     .on('click', function() {
+        console.log(memberDots2019);
+        for (var i = 0; i < memberDots2019.length; i++) {
+            memberDots2019[i].transition().duration(500).attr('r', 8)
+                .style('opacity', 0.3);
+        }
+    });
 
+d3.selectAll('.resume2019')
+    .on('click', function() {
+        console.log(memberDots2019);
+        for (var i = 0; i < memberDots2019.length; i++) {
+            memberDots2019[i].transition().duration(500).attr('r', 3)
+                .style('opacity', 0.06);
+        }
     });
 
 d3.selectAll('.highlight0040')
