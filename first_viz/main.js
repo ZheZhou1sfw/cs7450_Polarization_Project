@@ -1,5 +1,5 @@
 // Setting up global width and length, and padding sizes
-var globalWidth = 1200, globalHeight = 1000;
+var globalWidth = 1500, globalHeight = 800;
 paddings = {top : 100, bottom : 55, left : 60, right : 20};
 
 // create and select the global svg
@@ -14,27 +14,29 @@ var svg = d3.select("body")
 var mainG = svg.append('g')
     .attr('transform', 'translate('+[paddings.left, paddings.top]+')');
 
-// Create the zoomed-in visualization group
+
+
+// Create a pre-rendered rectangle frame for zoomed in viz
+var zoomedInWidth = globalWidth / 5;
+var zoomedInHeight = globalHeight - paddings.top - paddings.bottom;
+
 var zoomedInPos = {
-    left: globalWidth / 2.5,
-    top: paddings.top / 3,
+    left: globalWidth - paddings.right - zoomedInWidth,
+    top: paddings.top,
 };
 
+// Create the zoomed-in visualization group
 var zoomedInG = svg.append('g')
     .attr('transform', 'translate('+[zoomedInPos.left, zoomedInPos.top]+')')
     //.attr('visibility', 'hidden');
     .attr('visibility', 'visible');
-
-// Create a pre-rendered rectangle frame for zoomed in viz
-var zoomedInWidth = globalWidth / 3;
-var zoomedInHeight = globalHeight / 3;
 
 var zoomedInFrame = zoomedInG.append('rect')
     .attr('x', 0)
     .attr('y', 0)
     .attr('width', zoomedInWidth)
     .attr('height', zoomedInHeight)
-    .style('fill', '#FDEBD0');
+    .style('fill', '#e9fdbb');
 
 
 // load the data and do the job
@@ -296,9 +298,9 @@ d3.csv('real_initial_data.csv', dataPreprocessor).then(function(dataset) {
     }
 
     // step3: PreDefine the data we want
-    let democData = [];
-    let repubData = [];
-    let combinedData = [];
+    democData = [];
+    repubData = [];
+    combinedData = [];
 
     // step4: Calculate the medians
     for (var i = 57; i <= 116; i++) {
@@ -329,11 +331,11 @@ d3.csv('real_initial_data.csv', dataPreprocessor).then(function(dataset) {
     console.log(combinedData);
 
     // create the X and Y scale for the major visualization
-    var xScale = d3.scaleLinear()
+    xScale = d3.scaleLinear()
         .domain([1900, 2019])
-        .range([0, globalWidth - paddings.left - paddings.right]);
+        .range([0, globalWidth - paddings.left - paddings.right - zoomedInWidth]);
 
-    var yScale = d3.scaleLinear()
+    yScale = d3.scaleLinear()
         .domain([-0.6, 0.7])
         .range([globalHeight - paddings.top - paddings.bottom, 0]);
 
@@ -383,7 +385,7 @@ d3.csv('real_initial_data.csv', dataPreprocessor).then(function(dataset) {
 
 
     // Draw three lines(paths)
-    var pathGroup = mainG.append('g');
+    pathGroup = mainG.append('g');
 
 
     var democPath = pathGroup.append('path')
@@ -392,7 +394,7 @@ d3.csv('real_initial_data.csv', dataPreprocessor).then(function(dataset) {
         .attr('fill', 'none')
         .attr('stroke', 'steelblue')
         .attr("stroke-width", 3);
-
+    console.log(repubPathData.length);
     var repubPath = pathGroup.append('path')
         .attr('class', 'path main')
         .attr('d', repubPathData)
@@ -608,6 +610,8 @@ d3.csv('real_initial_data.csv', dataPreprocessor).then(function(dataset) {
 
     });
 
+    //
+
 
     // add all individual members circles
     memberCircleG = mainG.append('g');
@@ -618,6 +622,7 @@ d3.csv('real_initial_data.csv', dataPreprocessor).then(function(dataset) {
         .enter()
         .append('circle')
         .attr('cx', function(d) {
+            if (d.icpsr === '14920') specialPersonCircle = d3.select(this);
             var curYear = (d.congress - 57) * 2  + 1900;
             return xScale(curYear)
         })
@@ -911,3 +916,446 @@ function compressData(originalData) {
     icpsrToPersonMap = res;
     return realRes;
 }
+
+
+// add more mappings to button action
+function wait(ms){
+    var start = new Date().getTime();
+    var end = start;
+    while(end < start + ms) {
+        end = new Date().getTime();
+    }
+}
+
+function changeLineOpacity(op) {
+    pathGroup.selectAll('path')
+        .transition()
+        .duration(500)
+        .ease(d3.easeLinear)
+        .style('opacity', op);
+}
+
+
+d3.selectAll('.highlightTwoLines')
+    .on('click', function() {
+        changeLineOpacity(0.2);
+        memberCircleG.style('opacity', 0.2);
+    });
+
+d3.selectAll('.resumeTwoLines')
+    .on('click', function() {
+        changeLineOpacity(1);
+    });
+
+
+jQuery.fn.d3Click = function () {
+    this.each(function (i, e) {
+        var evt = new MouseEvent("click");
+        e.dispatchEvent(evt);
+    });
+};
+
+d3.selectAll('.highlightOnePoint')
+    .on('click', function() {
+        specialPersonCircle.dispatch('click');
+    });
+
+d3.selectAll('.highlight2019')
+    .on('click', function() {
+
+    });
+
+d3.selectAll('.highlight0040')
+    .on('click', function() {
+        pathGroup.selectAll('path').remove();
+        var democPoints = [];
+        var repubPoints = [];
+        var combinedPoints = [];
+
+        for (var i = 57; i <= 77; i += 1) { // 1900 - 1940
+
+            var curYear = (i - 57) * 2  + 1900;
+
+            var tempDemoc = [];
+            tempDemoc.push(xScale(curYear));
+            tempDemoc.push(yScale(democData[i - 57]['median_dim1']));
+            democPoints.push(tempDemoc);
+
+            var tempRepub = [];
+            tempRepub.push(xScale(curYear));
+            tempRepub.push(yScale(repubData[i - 57]['median_dim1']));
+            repubPoints.push(tempRepub);
+
+            var tempCombined = [];
+            tempCombined.push(xScale(curYear));
+            tempCombined.push(yScale(combinedData[i - 57]['median_dim1']));
+            combinedPoints.push(tempCombined);
+        }
+        var democPathData = lineGenerator(democPoints);
+
+        var repubPathData = lineGenerator(repubPoints);
+
+        var combinedPathData = lineGenerator(combinedPoints);
+
+        // Draw three lines(paths)
+        var democPath = pathGroup.append('path')
+            .attr('class', 'path main')
+            .attr('d', democPathData)
+            .attr('fill', 'none')
+            .attr('stroke', 'steelblue')
+            .attr("stroke-width", 3);
+        console.log(repubPathData.length);
+        var repubPath = pathGroup.append('path')
+            .attr('class', 'path main')
+            .attr('d', repubPathData)
+            .style('fill', 'none')
+            .style('stroke', 'red')
+            .attr("stroke-width", 3);
+
+        var combinedPath = pathGroup.append('path')
+            .attr('class', 'path main')
+            .attr('d', combinedPathData)
+            .style('fill', 'none')
+            .style('stroke', 'grey')
+            .attr("stroke-width", 3);
+
+        // -------------------------- part of the path that should be dimed
+        var democPoints = [];
+        var repubPoints = [];
+        var combinedPoints = [];
+
+        for (var i = 77; i <= 116; i += 1) { // 1900 - 1940
+
+            var curYear = (i - 57) * 2  + 1900;
+
+            var tempDemoc = [];
+            tempDemoc.push(xScale(curYear));
+            tempDemoc.push(yScale(democData[i - 57]['median_dim1']));
+            democPoints.push(tempDemoc);
+
+            var tempRepub = [];
+            tempRepub.push(xScale(curYear));
+            tempRepub.push(yScale(repubData[i - 57]['median_dim1']));
+            repubPoints.push(tempRepub);
+
+            var tempCombined = [];
+            tempCombined.push(xScale(curYear));
+            tempCombined.push(yScale(combinedData[i - 57]['median_dim1']));
+            combinedPoints.push(tempCombined);
+        }
+        var democPathData = lineGenerator(democPoints);
+
+        var repubPathData = lineGenerator(repubPoints);
+
+        var combinedPathData = lineGenerator(combinedPoints);
+
+        // Draw three lines(paths)
+        var democPath = pathGroup.append('path')
+            .attr('class', 'path main')
+            .attr('d', democPathData)
+            .attr('fill', 'none')
+            .attr('stroke', 'steelblue')
+            .attr("stroke-width", 3)
+            .style('opacity', 0.2);
+        console.log(repubPathData.length);
+        var repubPath = pathGroup.append('path')
+            .attr('class', 'path main')
+            .attr('d', repubPathData)
+            .style('fill', 'none')
+            .style('stroke', 'red')
+            .attr("stroke-width", 3)
+            .style('opacity', 0.2);
+
+        var combinedPath = pathGroup.append('path')
+            .attr('class', 'path main')
+            .attr('d', combinedPathData)
+            .style('fill', 'none')
+            .style('stroke', 'grey')
+            .attr("stroke-width", 3)
+            .style('opacity', 0.2);
+
+    });
+
+d3.selectAll('.highlight4080')
+    .on('click', function() {
+            pathGroup.selectAll('path').remove();
+            var democPoints = [];
+            var repubPoints = [];
+            var combinedPoints = [];
+
+            for (var i = 57; i <= 77; i += 1) { // 1900 - 1940
+
+                var curYear = (i - 57) * 2  + 1900;
+
+                var tempDemoc = [];
+                tempDemoc.push(xScale(curYear));
+                tempDemoc.push(yScale(democData[i - 57]['median_dim1']));
+                democPoints.push(tempDemoc);
+
+                var tempRepub = [];
+                tempRepub.push(xScale(curYear));
+                tempRepub.push(yScale(repubData[i - 57]['median_dim1']));
+                repubPoints.push(tempRepub);
+
+                var tempCombined = [];
+                tempCombined.push(xScale(curYear));
+                tempCombined.push(yScale(combinedData[i - 57]['median_dim1']));
+                combinedPoints.push(tempCombined);
+            }
+            var democPathData = lineGenerator(democPoints);
+
+            var repubPathData = lineGenerator(repubPoints);
+
+            var combinedPathData = lineGenerator(combinedPoints);
+
+            // Draw three lines(paths)
+            var democPath = pathGroup.append('path')
+                .attr('class', 'path main')
+                .attr('d', democPathData)
+                .attr('fill', 'none')
+                .attr('stroke', 'steelblue')
+                .attr("stroke-width", 3)
+                .style('opacity', 0.2);
+            var repubPath = pathGroup.append('path')
+                .attr('class', 'path main')
+                .attr('d', repubPathData)
+                .style('fill', 'none')
+                .style('stroke', 'red')
+                .attr("stroke-width", 3)
+                .style('opacity', 0.2);
+
+            var combinedPath = pathGroup.append('path')
+                .attr('class', 'path main')
+                .attr('d', combinedPathData)
+                .style('fill', 'none')
+                .style('stroke', 'grey')
+                .attr("stroke-width", 3)
+                .style('opacity', 0.2);
+
+            // -------------------------- part of the path that should be dimed
+            var democPoints = [];
+            var repubPoints = [];
+            var combinedPoints = [];
+
+            for (var i = 77; i <= 97; i += 1) { // 1900 - 1940
+
+                var curYear = (i - 57) * 2  + 1900;
+
+                var tempDemoc = [];
+                tempDemoc.push(xScale(curYear));
+                tempDemoc.push(yScale(democData[i - 57]['median_dim1']));
+                democPoints.push(tempDemoc);
+
+                var tempRepub = [];
+                tempRepub.push(xScale(curYear));
+                tempRepub.push(yScale(repubData[i - 57]['median_dim1']));
+                repubPoints.push(tempRepub);
+
+                var tempCombined = [];
+                tempCombined.push(xScale(curYear));
+                tempCombined.push(yScale(combinedData[i - 57]['median_dim1']));
+                combinedPoints.push(tempCombined);
+            }
+            var democPathData = lineGenerator(democPoints);
+
+            var repubPathData = lineGenerator(repubPoints);
+
+            var combinedPathData = lineGenerator(combinedPoints);
+
+            // Draw three lines(paths)
+            var democPath = pathGroup.append('path')
+                .attr('class', 'path main')
+                .attr('d', democPathData)
+                .attr('fill', 'none')
+                .attr('stroke', 'steelblue')
+                .attr("stroke-width", 3);
+            var repubPath = pathGroup.append('path')
+                .attr('class', 'path main')
+                .attr('d', repubPathData)
+                .style('fill', 'none')
+                .style('stroke', 'red')
+                .attr("stroke-width", 3);
+
+            var combinedPath = pathGroup.append('path')
+                .attr('class', 'path main')
+                .attr('d', combinedPathData)
+                .style('fill', 'none')
+                .style('stroke', 'grey')
+                .attr("stroke-width", 3);
+
+        // -------------------------- part of the path that should be dimed
+        var democPoints = [];
+        var repubPoints = [];
+        var combinedPoints = [];
+
+        for (var i = 97; i <= 116; i += 1) { // 1900 - 1940
+
+            var curYear = (i - 57) * 2  + 1900;
+
+            var tempDemoc = [];
+            tempDemoc.push(xScale(curYear));
+            tempDemoc.push(yScale(democData[i - 57]['median_dim1']));
+            democPoints.push(tempDemoc);
+
+            var tempRepub = [];
+            tempRepub.push(xScale(curYear));
+            tempRepub.push(yScale(repubData[i - 57]['median_dim1']));
+            repubPoints.push(tempRepub);
+
+            var tempCombined = [];
+            tempCombined.push(xScale(curYear));
+            tempCombined.push(yScale(combinedData[i - 57]['median_dim1']));
+            combinedPoints.push(tempCombined);
+        }
+        var democPathData = lineGenerator(democPoints);
+
+        var repubPathData = lineGenerator(repubPoints);
+
+        var combinedPathData = lineGenerator(combinedPoints);
+
+        // Draw three lines(paths)
+        var democPath = pathGroup.append('path')
+            .attr('class', 'path main')
+            .attr('d', democPathData)
+            .attr('fill', 'none')
+            .attr('stroke', 'steelblue')
+            .attr("stroke-width", 3)
+            .style('opacity', 0.2);
+        var repubPath = pathGroup.append('path')
+            .attr('class', 'path main')
+            .attr('d', repubPathData)
+            .style('fill', 'none')
+            .style('stroke', 'red')
+            .attr("stroke-width", 3)
+            .style('opacity', 0.2);
+
+        var combinedPath = pathGroup.append('path')
+            .attr('class', 'path main')
+            .attr('d', combinedPathData)
+            .style('fill', 'none')
+            .style('stroke', 'grey')
+            .attr("stroke-width", 3)
+            .style('opacity', 0.2);
+    });
+
+d3.selectAll('.highlight8020')
+    .on('click', function() {
+        pathGroup.selectAll('path').remove();
+        var democPoints = [];
+        var repubPoints = [];
+        var combinedPoints = [];
+
+        for (var i = 57; i <= 97; i += 1) { // 1900 - 1940
+
+            var curYear = (i - 57) * 2  + 1900;
+
+            var tempDemoc = [];
+            tempDemoc.push(xScale(curYear));
+            tempDemoc.push(yScale(democData[i - 57]['median_dim1']));
+            democPoints.push(tempDemoc);
+
+            var tempRepub = [];
+            tempRepub.push(xScale(curYear));
+            tempRepub.push(yScale(repubData[i - 57]['median_dim1']));
+            repubPoints.push(tempRepub);
+
+            var tempCombined = [];
+            tempCombined.push(xScale(curYear));
+            tempCombined.push(yScale(combinedData[i - 57]['median_dim1']));
+            combinedPoints.push(tempCombined);
+        }
+        var democPathData = lineGenerator(democPoints);
+
+        var repubPathData = lineGenerator(repubPoints);
+
+        var combinedPathData = lineGenerator(combinedPoints);
+
+        // Draw three lines(paths)
+        var democPath = pathGroup.append('path')
+            .attr('class', 'path main')
+            .attr('d', democPathData)
+            .attr('fill', 'none')
+            .attr('stroke', 'steelblue')
+            .attr("stroke-width", 3)
+            .style('opacity', 0.2);
+
+
+        var repubPath = pathGroup.append('path')
+            .attr('class', 'path main')
+            .attr('d', repubPathData)
+            .style('fill', 'none')
+            .style('stroke', 'red')
+            .attr("stroke-width", 3)
+            .style('opacity', 0.2);
+
+
+        var combinedPath = pathGroup.append('path')
+            .attr('class', 'path main')
+            .attr('d', combinedPathData)
+            .style('fill', 'none')
+            .style('stroke', 'grey')
+            .attr("stroke-width", 3)
+            .style('opacity', 0.2);
+
+
+        // -------------------------- part of the path that should be dimed
+        var democPoints = [];
+        var repubPoints = [];
+        var combinedPoints = [];
+
+        for (var i = 97; i <= 116; i += 1) { // 1900 - 1940
+
+            var curYear = (i - 57) * 2  + 1900;
+
+            var tempDemoc = [];
+            tempDemoc.push(xScale(curYear));
+            tempDemoc.push(yScale(democData[i - 57]['median_dim1']));
+            democPoints.push(tempDemoc);
+
+            var tempRepub = [];
+            tempRepub.push(xScale(curYear));
+            tempRepub.push(yScale(repubData[i - 57]['median_dim1']));
+            repubPoints.push(tempRepub);
+
+            var tempCombined = [];
+            tempCombined.push(xScale(curYear));
+            tempCombined.push(yScale(combinedData[i - 57]['median_dim1']));
+            combinedPoints.push(tempCombined);
+        }
+        var democPathData = lineGenerator(democPoints);
+
+        var repubPathData = lineGenerator(repubPoints);
+
+        var combinedPathData = lineGenerator(combinedPoints);
+
+        // Draw three lines(paths)
+        var democPath = pathGroup.append('path')
+            .attr('class', 'path main')
+            .attr('d', democPathData)
+            .attr('fill', 'none')
+            .attr('stroke', 'steelblue')
+            .attr("stroke-width", 3);
+
+        var repubPath = pathGroup.append('path')
+            .attr('class', 'path main')
+            .attr('d', repubPathData)
+            .style('fill', 'none')
+            .style('stroke', 'red')
+            .attr("stroke-width", 3);
+
+        var combinedPath = pathGroup.append('path')
+            .attr('class', 'path main')
+            .attr('d', combinedPathData)
+            .style('fill', 'none')
+            .style('stroke', 'grey')
+            .attr("stroke-width", 3);
+
+    });
+
+d3.selectAll('.resumeMemberDots')
+    .on('click', function() {
+        memberCircleG.transition()
+            .duration(500)
+            .ease(d3.easeLinear).style('opacity', 1);
+        }
+    )
