@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="448px" height="269px" viewBox="0 0 448 269" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 61 (89581) - https://sketch.com -->
+    <title>Fig 2</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Fig-2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <text id="Extremely-liberal." font-family="MillerDisplay-Roman, Miller Display" font-size="24" font-weight="normal" fill="#141414">
+            <tspan x="179" y="45">Extremely liberal.</tspan>
+        </text>
+        <text id="Extremely-conservati" font-family="MillerDisplay-Roman, Miller Display" font-size="24" font-weight="normal" fill="#141414">
+            <tspan x="179" y="239">Extremely conservative.</tspan>
+        </text>
+        <g id="Group" transform="translate(88.000000, 34.000000)" stroke-linecap="square" stroke-width="3">
+            <line x1="0.5" y1="94.5" x2="0.5" y2="182.5" id="Line" stroke="#D5DBF7"></line>
+            <line x1="0.5" y1="1.5" x2="0.5" y2="91.5" id="Line-Copy-3" stroke="#F7D5D5"></line>
+        </g>
+        <g id="Group-4" transform="translate(7.000000, 89.000000)">
+            <rect id="Rectangle" fill="#FFFFFF" x="0" y="0" width="163" height="85"></rect>
+            <rect id="Rectangle" fill="#EAD068" x="15" y="18" width="135" height="27" rx="4.5"></rect>
+            <text id="dw-nominate" font-family="IBMPlexMono-Bold, IBM Plex Mono" font-size="18" font-weight="bold" fill="#83650C">
+                <tspan x="23" y="38">dw-nominate</tspan>
+            </text>
+            <text id="dim1" font-family="IBMPlexMono-Bold, IBM Plex Mono" font-size="18" font-weight="bold" fill="#141414">
+                <tspan x="60" y="67">dim1</tspan>
+            </text>
+        </g>
+        <g id="Group-2" transform="translate(44.000000, 16.000000)">
+            <path d="M9.22998709,-8.26319595e-16 L80.7700129,3.72902526e-16 C83.9794805,-2.16667106e-16 85.143311,0.334172213 86.3166444,0.961677772 C87.4899778,1.58918333 88.4108167,2.51002223 89.0383222,3.68335561 C89.6658278,4.85668899 90,6.0205195 90,9.22998709 L90,33.7700129 C90,36.9794805 89.6658278,38.143311 89.0383222,39.3166444 C88.4108167,40.4899778 87.4899778,41.4108167 86.3166444,42.0383222 C85.143311,42.6658278 83.9794805,43 80.7700129,43 L9.22998709,43 C6.0205195,43 4.85668899,42.6658278 3.68335561,42.0383222 C2.51002223,41.4108167 1.58918333,40.4899778 0.961677772,39.3166444 C0.334172213,38.143311 1.44444737e-16,36.9794805 -2.48601684e-16,33.7700129 L2.48601684e-16,9.22998709 C-1.44444737e-16,6.0205195 0.334172213,4.85668899 0.961677772,3.68335561 C1.58918333,2.51002223 2.51002223,1.58918333 3.68335561,0.961677772 C4.85668899,0.334172213 6.0205195,4.80115481e-16 9.22998709,-8.26319595e-16 Z" id="Rectangle-Copy-4" fill="#F7D5D5"></path>
+            <text id="+1.0" font-family="MillerText-Bold, Miller Text" font-size="25.200001" font-weight="bold" fill="#D34444">
+                <tspan x="20" y="29">+1.0</tspan>
+            </text>
+        </g>
+        <g id="Group-2-Copy" transform="translate(44.000000, 211.000000)">
+            <path d="M9.22998709,-8.26319595e-16 L80.7700129,3.72902526e-16 C83.9794805,-2.16667106e-16 85.143311,0.334172213 86.3166444,0.961677772 C87.4899778,1.58918333 88.4108167,2.51002223 89.0383222,3.68335561 C89.6658278,4.85668899 90,6.0205195 90,9.22998709 L90,33.7700129 C90,36.9794805 89.6658278,38.143311 89.0383222,39.3166444 C88.4108167,40.4899778 87.4899778,41.4108167 86.3166444,42.0383222 C85.143311,42.6658278 83.9794805,43 80.7700129,43 L9.22998709,43 C6.0205195,43 4.85668899,42.6658278 3.68335561,42.0383222 C2.51002223,41.4108167 1.58918333,40.4899778 0.961677772,39.3166444 C0.334172213,38.143311 1.44444737e-16,36.9794805 -2.48601684e-16,33.7700129 L2.48601684e-16,9.22998709 C-1.44444737e-16,6.0205195 0.334172213,4.85668899 0.961677772,3.68335561 C1.58918333,2.51002223 2.51002223,1.58918333 3.68335561,0.961677772 C4.85668899,0.334172213 6.0205195,4.80115481e-16 9.22998709,-8.26319595e-16 Z" id="Rectangle-Copy-4" fill="#D5DBF7"></path>
+            <text id="-1.0" font-family="MillerText-Bold, Miller Text" font-size="25.200001" font-weight="bold" fill="#4553E2">
+                <tspan x="20" y="29">-1.0</tspan>
+            </text>
+        </g>
+    </g>
+</svg>
