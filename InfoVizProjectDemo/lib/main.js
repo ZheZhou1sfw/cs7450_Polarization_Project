@@ -195,7 +195,7 @@ new ScrollMagic.Scene({
 // lock viz1
 new ScrollMagic.Scene({
   triggerElement: "#viz1ToLock",
-  duration: 5000,
+  duration: 3500,
   offset: 0, // move trigger to center of element
   triggerHook: 'onLeave'
 })
@@ -431,6 +431,76 @@ new ScrollMagic.Scene({
     .setClassToggle("#testPart19", "changeColor") // add class toggle
     .addIndicators() // add indicators (requires plugin)
     .addTo(controller);
+
+
+// lock viz2 here
+new ScrollMagic.Scene({
+  triggerElement: "#viz2ToLock",
+  duration: 3500,
+  offset: 0, // move trigger to center of element
+  triggerHook: 'onLeave'
+})
+    .setPin("#viz2ToLock", {pushFollowers: true})
+    .addIndicators() // add indicators (requires plugin)
+    .addTo(controller);
+
+// highlight 1980-1995
+new ScrollMagic.Scene({
+  triggerElement: "#viz2ToLock",
+  triggerHook: 0.4,
+  offset: 500, // move trigger to center of element
+  duration: 150,
+  triggerHook: 'onLeave'
+})
+    .addIndicators() // add indicators (requires plugin)
+    .addTo(controller)
+    .on('enter', function(e) {
+      jQuery('.toggleMemberDots')[0].click();
+      jQuery('.highlight8095')[0].click();
+    });
+
+// highlight 1995-2011
+new ScrollMagic.Scene({
+  triggerElement: "#viz2ToLock",
+  triggerHook: 0.4,
+  offset: 800, // move trigger to center of element
+  duration: 150,
+  triggerHook: 'onLeave'
+})
+    .addIndicators() // add indicators (requires plugin)
+    .addTo(controller)
+    .on('enter', function(e) {
+      jQuery('.highlight9511')[0].click();
+    });
+
+// highlight 1980-1995
+new ScrollMagic.Scene({
+  triggerElement: "#viz2ToLock",
+  triggerHook: 0.4,
+  offset: 1100, // move trigger to center of element
+  duration: 150,
+  triggerHook: 'onLeave'
+})
+    .addIndicators() // add indicators (requires plugin)
+    .addTo(controller)
+    .on('enter', function(e) {
+      jQuery('.highlight1119')[0].click();
+    });
+
+// resume everything
+new ScrollMagic.Scene({
+  triggerElement: "#viz2ToLock",
+  triggerHook: 0.4,
+  offset: 1100, // move trigger to center of element
+  duration: 150,
+  triggerHook: 'onLeave'
+})
+    .addIndicators() // add indicators (requires plugin)
+    .addTo(controller)
+    .on('enter', function(e) {
+      jQuery('.toggleCentroid')[0].click();
+      jQuery('.toggleMemberDots')[0].click();
+    });
 
 new ScrollMagic.Scene({
   triggerElement: "#testPart21",

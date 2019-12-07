@@ -591,7 +591,7 @@ Promise.all([
         return new Date(1981 + (d - 97) * 2, 10, 3);
     });
 
-    var sliderTime = d3
+    sliderTime = d3
         .sliderBottom()
         .min(d3.min(dataTime))
         .max(d3.max(dataTime))
@@ -1048,4 +1048,19 @@ d3.selectAll('.toggleSelector')
             viz2stateG.attr('visibility', 'visible');
         }
         selectorIsVisible = !selectorIsVisible;
+    });
+
+d3.selectAll('.highlight8095')
+    .on('click', function() {
+        sliderTime.value(new Date(1995, 10, 3));
+    });
+
+d3.selectAll('.highlight9511')
+    .on('click', function() {
+        sliderTime.value(new Date(2011, 10, 3));
+    });
+
+d3.selectAll('.highlight1119')
+    .on('click', function() {
+        sliderTime.value(new Date(2019, 10, 3));
     });
