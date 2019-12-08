@@ -22,28 +22,6 @@
 </head>
 
 <body>
-  <section class="is-hidden-mobile">
-    <nav class="navbar" role="navigation" aria-label="main navigation" style="padding-top: 2rem; padding-right: 2rem;">
-      <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-      </a>
-      <div id="navbarBasicExample" class="navbar-menu">
-        <div class="navbar-end">
-          <a class="navbar-item nav-link" href="https://adikundu.github.io/">
-            <span><nobr>Home</nobr></span>
-          </a>
-          <a class="navbar-item nav-link" href="https://adikundu.github.io/about">
-            <span><nobr>About</nobr></span>
-          </a>
-          <a class="navbar-item active-nav-link" href="https://adikundu.github.io/#project-section">
-            <span><nobr>Projects</nobr></span>
-          </a>
-        </div>
-      </div>
-    </nav>
-  </section>
 
     <section class="hero" full-size-mod>
         <div class="hero-body">
@@ -110,7 +88,7 @@
   <!-- place for viz1 -->
     <div class="container is-fluid" style="margin-left: 0rem; margin-right: 0rem; border-radius: 0rem;">
         <section style=" background-size: cover; background-color: #141414; margin-bottom: 5rem;" class="hero is-medium section-hero-mod full-size-mod" id = "viz1ToLock">
-            <div class="hero-padding-mod hero-body viz1Place">
+            <div class="hero-padding-mod hero-body viz1Place" style="position:relative;">
                 <!-- Things that I added for viz1, mainly are buttons including animation buttons and search box-->
 
 
@@ -122,6 +100,7 @@
                         <input type="checkbox" name="options" autocomplete="off" checked>ZoomedIn off
                     </label><br>
                 </div><br>
+                <button type="button" class="toggleViz1Tooltips">toggle tooltips</button>
                 <button type="button" class="highlightTwoLines" style="display: none;">Highlight three lines</button>
                 <button type="button" class="resumeTwoLines" style="display: none">Resume three lines</button>
                 <button type="button" class="highlightOnePoint" style="display: none">Highlight one point</button>
@@ -163,7 +142,8 @@
                     <p class="is-size-6" id="testPart13">Talk about how X’s votes have been increasingly aligned with party lines.</p><br><br><br><br><br>
                     <p class="is-size-6" id="testPart14">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nec dui nunc mattis enim ut.</p><br><br><br><br><br>
                 </div>
-                <div class="column is-4 is-offset-2 politician2Place" id="politician2Place">
+                <!--<div class="column is-4 is-offset-2 politician2Place" id="politician2Place">-->
+                <div class="column is-4 politician2Place" id="politician2Place">
                     <!--
                     <img src="css/assets/Fig3.png"> -->
                     <button type="button" class="toggleLineChart">Show/Hide line</button><br>
@@ -221,7 +201,8 @@
                 <button type="button" class="highlight9511" style="display: none">Highlight the second period</button>
                 <button type="button" class="highlight1119" style="display: none">Highlight the third period</button><br>
                 <div class="column is-4">
-                    <p class="is-size-6 has-text-white">In the 1980s, ideologies are spread across the political spectrum.</p>
+                    <p class="is-size-6 has-text-white" id="viz2Text"></p>
+<!--                    <p class="is-size-6 has-text-white">In the 1980s, ideologies are spread across the political spectrum.</p>-->
                 </div>
             </div>
         </section>
