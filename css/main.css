@@ -149,6 +149,7 @@ code {
   background-color: #EAD068;
   color: #83650C;
   font-size: 0.875em;
+  font-family: 'IBM Plex Mono', monospace;
   font-weight: 800;
   padding: 0.25em 0.5em 0.25em; }
 
@@ -6532,7 +6533,8 @@ label.panel-block {
 .hero-body {
   flex-grow: 1;
   flex-shrink: 0;
-  padding: 3rem 1.5rem; }
+  padding: 3rem 1.5rem;
+  position: relative; }
 
 .section {
   padding: 3rem 1.5rem; }
@@ -6547,6 +6549,15 @@ label.panel-block {
   padding: 3rem 1.5rem 6rem; }
 
 /*My CSS mods start from here!*/
+.mainSVG{
+  fill: red;
+  z-index: -10;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
 
 p {
     margin-bottom: 1.5rem;
