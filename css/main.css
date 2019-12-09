@@ -6549,6 +6549,24 @@ label.panel-block {
   padding: 3rem 1.5rem 6rem; }
 
 /*My CSS mods start from here!*/
+.zoomedInText{
+  font-family: 'miller-display', serif;
+  font-size: 0.8rem;
+  color: #494949;
+}
+
+.zoomedInTextHeader{
+  font-family: 'miller-display', serif;
+  font-size: 1rem;
+  color: #141414;
+}
+
+.autoComplete_result{
+  font-family: 'miller display', serif;
+  color: #ffffff;
+}
+
+
 .mainSVG{
   position: absolute;
   top: 0;
@@ -6557,6 +6575,7 @@ label.panel-block {
   height: 100%;
   z-index: 5;
 }
+
 p {
     margin-bottom: 1.5rem;
     font-family: miller-display, serif;
