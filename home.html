@@ -6,19 +6,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="theme-color" content="#1D1D1D">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Campskil</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.2.0/dist/css/autoComplete.min.css">
+    <title>Political Polarization in the U.S. Congress</title>
+<!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.2.0/dist/css/autoComplete.min.css">-->
     <link rel="stylesheet" type="text/css" href="css/fonts/style.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/scrollingCss.css">
     <link rel="stylesheet" href="https://use.typekit.net/wdw4vlh.css">
-    <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono:700&display=swap" rel="stylesheet">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <style>
 
     </style>
-    <script src="../../InfoVizProjectDemo/lib/main.js"></script>
+
 </head>
 
 <body>
@@ -28,14 +28,14 @@
             <div class="columns">
                 <div class="column is-1">
                 </div>
-                <div class="column is-4" style="margin-top: 15%">
+                <div class="column is-4" style="margin-top: 10%">
                         <p class="project-heading is-size-3">Political Polarization in the U.S. Congress.</p><br><br><br>
                         <p class="subheading is-size-7">Visualizing how the Republicans and Democrats have grown increasingly divided in ideology over the past years. </p>
                         <p class="subheading-credits is-size-7">By <a class="is-text-link" href=""><span><nobr>Zhe Zhou</nobr></span></a>  and <a class="is-text-link" href=""><span><nobr>Aditya Kundu</nobr></span></a></p>
                         <p class="is-size-6 has-text-grey-lighter" style="margin-top: 15rem;"> Scroll down to begin reading</p>
                 </div>
                 <div class="column is-4 is-offset-2" id="imageToLock1" >
-                    <img src="css/assets/Fig1.png" style="padding: 10%;">
+                    <img src="css/assets/Fig1.png" style="padding: 10%; margin-top: 10%;">
                 </div>
             </div>
         </div>
@@ -88,29 +88,20 @@
   <!-- place for viz1 -->
     <div class="container is-fluid" style="margin-left: 0rem; margin-right: 0rem; border-radius: 0rem;">
         <section style=" background-size: cover; background-color: #141414; margin-bottom: 5rem;" class="hero is-medium section-hero-mod full-size-mod" id = "viz1ToLock">
-            <div class="hero-padding-mod hero-body viz1Place" style="position:relative;">
+            <div class="hero-padding-mod hero-body viz1Place">
+                <div class="columns">
                 <!-- Things that I added for viz1, mainly are buttons including animation buttons and search box-->
 
 
-                <div class="btn-group btn-group-sm" data-toggle="buttons">
-                    <label class="btn btn-secondary" data-type="brushing_on">
-                        <input type="checkbox" name="options" autocomplete="off">ZoomedIn on
-                    </label><br>
-                    <label class="btn btn-secondary active" data-type="brushing_off">
-                        <input type="checkbox" name="options" autocomplete="off" checked>ZoomedIn off
-                    </label><br>
-                </div><br>
-                <button type="button" class="toggleViz1Tooltips">toggle tooltips</button>
-                <button type="button" class="highlightTwoLines" style="display: none;">Highlight three lines</button>
-                <button type="button" class="resumeTwoLines" style="display: none">Resume three lines</button>
-                <button type="button" class="highlightOnePoint" style="display: none">Highlight one point</button>
-                <button type="button" class="highlight2019" style="display: none">Highlight 2019</button>
-                <button type="button" class="resume2019" style="display: none">Resume 2019</button>
-                <button type="button" class="highlight0040" style="display: none">Highlight 1900-1940</button>
-                <button type="button" class="highlight4080" style="display: none">Highlight 1940-1980</button>
-                <button type="button" class="highlight8020" style="display: none">Highlight 1980-2019</button>
-                <button type="button" class="resumeMemberDots" style="display: none">Resume member dots</button><br>
-                <input type="text" name="Name" id="autoComplete">
+<!--                <div class="btn-group btn-group-sm" data-toggle="buttons">-->
+<!--                    <label class="btn btn-secondary" data-type="brushing_on">-->
+<!--                        <input type="checkbox" name="options" autocomplete="off">ZoomedIn on-->
+<!--                    </label><br>-->
+<!--                    <label class="btn btn-secondary active" data-type="brushing_off">-->
+<!--                        <input type="checkbox" name="options" autocomplete="off" checked>ZoomedIn off-->
+<!--                    </label><br>-->
+<!--                </div><br>-->
+
 
 
                 <!-- End ------------------------------------------------------------------------->
@@ -123,6 +114,24 @@
                     <p class="is-size-6 has-text-white">In recent history, increasing partisanship has led to divisive politics and politicians barely voting across party lines. Note the diverging trend in the visualization.</p>
                     <p class="is-size-6 has-text-white">Feel free to explore the visualization. When ready, scroll down.</p>
                     -->
+                </div>
+                <div class="column is-4 is-offset-1" style="z-index: 10;">
+                    <button type="button" class="toggleViz1Tooltips" style="visibility: hidden">toggle tooltips</button>
+                    <button type="button" class="highlightTwoLines" style="display: none;">Highlight three lines</button>
+                    <button type="button" class="resumeTwoLines" style="display: none">Resume three lines</button>
+                    <button type="button" class="highlightOnePoint" style="display: none">Highlight one point</button>
+                    <button type="button" class="highlight2019" style="display: none">Highlight 2019</button>
+                    <button type="button" class="resume2019" style="display: none">Resume 2019</button>
+                    <button type="button" class="highlight0040" style="display: none">Highlight 1900-1940</button>
+                    <button type="button" class="highlight4080" style="display: none">Highlight 1940-1980</button>
+                    <button type="button" class="highlight8020" style="display: none">Highlight 1980-2019</button>
+                    <button type="button" class="resumeMemberDots" style="display: none">Resume member dots</button><br>
+
+                    <div class="control">
+                        <input type="text" name="Name" id="autoComplete" class="input" style="width: 30%; visibility: hidden;">
+                    </div>
+
+                </div>
                 </div>
             </div>
         </section>
@@ -138,15 +147,16 @@
                 <div class="column is-4">
                     <p class="project-heading is-size-4">How does increased polarization affect voting patterns?</p><br><br><br><br><br>
                     <p class="is-size-6" id="testPart11">Let’s take a look at the democrat, John Conyers Jr.</p><br><br><br><br><br>
-                    <p class="is-size-6" id="testPart12">Over the course of his large tenure, Conyers voted on 2341 bills in Congress.</p> <br><br><br><br><br>
-                    <p class="is-size-6" id="testPart13">Talk about how X’s votes have been increasingly aligned with party lines.</p><br><br><br><br><br>
-                    <p class="is-size-6" id="testPart14">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nec dui nunc mattis enim ut.</p><br><br><br><br><br>
+                    <p class="is-size-6" id="testPart12">During the five decades he served in Congress, he voted on 23,829 bills brought to the floor of the House.</p> <br><br><br><br><br>
+                    <p class="is-size-6" id="testPart13">He occasionally voted for results that were not favored by his peers in the Democratic party.</p><br><br><br><br><br>
+                    <p class="is-size-6" id="testPart14">However, more recently, he has been strongly aligning with the Democratic party as shown by his voting behavior.</p><br><br><br><br><br>
+                    <p class="is-size-6" id="testPart15">Political polarization does indeed affect the voting behavior of individual politicians and in turn, the entire government.</p><br><br><br><br><br>
                 </div>
                 <!--<div class="column is-4 is-offset-2 politician2Place" id="politician2Place">-->
                 <div class="column is-4 politician2Place" id="politician2Place">
                     <!--
                     <img src="css/assets/Fig3.png"> -->
-                    <button type="button" class="toggleLineChart">Show/Hide line</button><br>
+                    <button type="button" class="toggleLineChart" style="display: none">Show/Hide line</button><br>
                 </div>  
             </div>
         </div>
@@ -165,7 +175,7 @@
                     <p class="is-size-6" id="testPart17">Taking a closer look at the data, we can understand the right-left shift in more detail.</p>
                 </div>
                 <div class="column is-4 is-offset-2" id="imageToLock5">
-                    <img src="css/assets/Fig5.svg">
+<!--                    <img src="css/assets/Fig5.svg">-->
                 </div>  
             </div>
         </div>
@@ -194,16 +204,22 @@
     <div class="container is-fluid" style="margin-left: 0rem; margin-right: 0rem; border-radius: 0rem;" id = "viz2ToLock">
         <section style=" background-size: cover; background-color: #141414; margin-bottom: 5rem;" class="hero is-medium section-hero-mod full-size-mod">
             <div class="hero-padding-mod hero-body viz2Place">
-                <button type="button" class="toggleCentroid">Show/Hide centroid</button>
-                <button type="button" class="toggleMemberDots">Show/Hide members</button>
-                <button type="button" class="toggleSelector">Show/Hide state selector</button>
-                <button type="button" class="highlight8095" style="display: none">Highlight the first period</button>
-                <button type="button" class="highlight9511" style="display: none">Highlight the second period</button>
-                <button type="button" class="highlight1119" style="display: none">Highlight the third period</button><br>
-                <div class="column is-4">
-                    <p class="is-size-6 has-text-white" id="viz2Text"></p>
-<!--                    <p class="is-size-6 has-text-white">In the 1980s, ideologies are spread across the political spectrum.</p>-->
+                <div class="columns">
+                    <div class="column is-4">
+                        <p class="is-size-6 has-text-white" id="viz2Text"></p>
+                        <!--                    <p class="is-size-6 has-text-white">In the 1980s, ideologies are spread across the political spectrum.</p>-->
+                    </div>
+                    <div class="column is-4 is-offset-1" style="z-index: 10;">
+                        <button type="button" class="toggleCentroid">Show/Hide centroid</button><br>
+                        <button type="button" class="toggleMemberDots">Show/Hide members</button><br>
+                        <button type="button" class="toggleSelector">Show/Hide state selector</button><br>
+                        <button type="button" class="highlight8095" style="display: none">Highlight the first period</button>
+                        <button type="button" class="highlight9511" style="display: none">Highlight the second period</button>
+                        <button type="button" class="highlight1119" style="display: none">Highlight the third period</button><br>
+                    </div>
                 </div>
+
+
             </div>
         </section>
     </div>
@@ -251,13 +267,13 @@
                     <div class="columns">
                         <div class="column is-1"></div>
                         <div class="column is-4">
-                            <p class="is-size-7">This webpage was developed as a part of the Information Visualization course taught by <a class="is-text-link"><span><nobr>Prof. John Stasko</nobr></span></a> at the Georgia Institute of Technology.</p>
-                            <p class="is-size-7">The data for this website has been sourced from <a class="is-text-link"><span><nobr>voteview.com</nobr></span></a>, hosted and maintained by UCLA’s Department of Political Science and Social Science Computing.</p>
-                            <p class="is-size-7">Thank you for your time!</p>
+                            <p class="is-size-7 footer-text">This webpage was developed as a part of the Information Visualization course taught by <a class="is-text-link"><span><nobr>Prof. John Stasko</nobr></span></a> at the Georgia Institute of Technology.</p>
+                            <p class="is-size-7 footer-text">The data for this website has been sourced from <a class="is-text-link" href="https://voteview.com/"><span><nobr>voteview.com</nobr></span></a>, hosted and maintained by UCLA’s Department of Political Science and Social Science Computing.</p>
+                            <p class="is-size-7 footer-text">Thank you for your time!</p>
                         </div>
                         <div class="column is-4 is-offset-2">
-                                <p class="is-size-7">Zhe Zhou<br><a class="is-text-link"><span><nobr>Github </nobr></span></a><a class="is-text-link"><span><nobr>LinkedIn</nobr></span></a></p>
-                                <p class="is-size-7">Aditya Kundu<br><a class="is-text-link"><span><nobr>Portfolio </nobr></span></a><a class="is-text-link"><span><nobr>LinkedIn</nobr></span></a></p>
+                                <p class="is-size-7 footer-text">Zhe Zhou<br><a class="is-text-link"><span><nobr>Github </nobr></span></a><a class="is-text-link"><span><nobr>LinkedIn</nobr></span></a></p>
+                                <p class="is-size-7 footer-text">Aditya Kundu<br><a class="is-text-link"><span><nobr>Portfolio </nobr></span></a><a class="is-text-link"><span><nobr>LinkedIn</nobr></span></a></p>
                             </div>
                     </div>
                   </div>
