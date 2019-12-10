@@ -6549,20 +6549,88 @@ label.panel-block {
   padding: 3rem 1.5rem 6rem; }
 
 /*My CSS mods start from here!*/
+
+/*Viz 1 tooltip customizations*/
+
+#custom_tip_rep{
+  width: 3rem;
+  margin-left: 30%;
+  margin-top: 5%;
+}
+
+#custom_tip_dem{
+  width: 3.3rem;
+  margin-left: 30%;
+  margin-top: 5%;
+}
+
+
+#rep_text{
+  font-weight: bold;
+  text-align: center;
+  font-size: 0.8rem;
+  color: #FFFFFF;
+  font-family: 'IBM Plex Mono';
+}
+
+#med_text{
+  font-weight: bold;
+  text-align: center;
+  font-size: 0.8rem;
+  color: #494949;
+  font-family: 'IBM Plex Mono';
+}
+
+#tip_dem_score{
+  padding: 0.1rem 0.2rem 0.1rem 0.2rem;
+  background-color: #D5DBF7;
+  font-size: 0.8rem;
+  color: #4553E2;
+  font-weight: bold;
+  border-radius: 0.2rem;
+  font-family: 'IBM Plex Mono';
+}
+
+#tip_rep_score{
+  padding: 0.1rem 0.2rem 0.1rem 0.2rem;
+  background-color: #F7D5D5;
+  font-size: 0.8rem;;
+  color: #D34444;
+  font-weight: bold;
+  border-radius: 0.2rem;
+  font-family: 'IBM Plex Mono';
+}
+
+.legend-text{
+  font-weight: bold;
+  font-size: 0.6rem;
+  color: #494949;
+  font-family: 'IBM Plex Mono';
+}
+
+.percentage-text{
+  font-weight: bold;
+  font-size: 0.6rem;
+  color: #4553E2;
+  font-family: 'IBM Plex Mono';
+  /*z-index: 15;*/
+}
+
+
 .zoomedInText{
-  font-family: 'miller-display', serif;
+  font-family: miller-display, serif;
   font-size: 0.8rem;
   color: #494949;
 }
 
 .zoomedInTextHeader{
-  font-family: 'miller-display', serif;
+  font-family: miller-display, serif;
   font-size: 1rem;
   color: #141414;
 }
 
 .autoComplete_result{
-  font-family: 'miller display', serif;
+  font-family: miller-display, serif;
   color: #ffffff;
 }
 
