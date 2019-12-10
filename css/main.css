@@ -6601,6 +6601,21 @@ label.panel-block {
   font-family: 'IBM Plex Mono';
 }
 
+.legend-text{
+  font-weight: bold;
+  font-size: 0.6rem;
+  color: #494949;
+  font-family: 'IBM Plex Mono';
+}
+
+.percentage-text{
+  font-weight: bold;
+  font-size: 0.6rem;
+  color: #4553E2;
+  font-family: 'IBM Plex Mono';
+}
+
+
 .zoomedInText{
   font-family: miller-display, serif;
   font-size: 0.8rem;
